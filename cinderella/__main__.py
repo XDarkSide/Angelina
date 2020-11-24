@@ -75,7 +75,7 @@ GDPR = []
 
 START_IMG = os.environ.get('START_IMG', None)
 if START_IMG is None:
-    img = "null"
+    img = ""
 else:
   img = START_IMG  
 
