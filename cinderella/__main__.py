@@ -73,6 +73,12 @@ USER_SETTINGS = {}
 
 GDPR = []
 
+START_IMG = os.environ.get('START_IMG', None)
+if START_IMG is None:
+    img = "https://telegra.ph/file/88aadddc9e5eddb475147.jpg"
+else:
+  img = START_IMG  
+
 
 for module_name in ALL_MODULES:
     imported_module = importlib.import_module("cinderella.modules." + module_name)
@@ -159,7 +165,28 @@ def start(bot: Bot, update: Update, args: List[str]):
         update.effective_message.reply_text("Heya,{} Here..\nHow can I help you? 🙂".format(bot.first_name),reply_markup=InlineKeyboardMarkup(
                                                 [[InlineKeyboardButton(text="⚜️Help",url="t.me/{}?start=help".format(bot.username))]]))
 
-   
+def send_start(bot, update):
+    #Try to remove old message
+    try:
+        query = update.callback_query
+        query.message.delete()
+    except:
+        pass
+
+    chat = update.effective_chat  # type: Optional[Chat]
+    first_name = update.effective_user.first_name 
+    text = PM_START_TEXT
+
+    keyboard = [[InlineKeyboardButton(text="🤝Help",callback_data="help_back"),InlineKeyboardButton(text="🛡Creator🛡",url="https://t.me/anonyindian")]]
+    keyboard += [[InlineKeyboardButton(text="🌐Connect Group", callback_data="main_connect"),InlineKeyboardButton(text="⚜️Add Me⚜️",url="t.me/{}?startgroup=true".format(bot.username))]]
+
+    update.effective_message.reply_photo(img, PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_NAME, OWNER_ID), 
+                                         reply_markup=InlineKeyboardMarkup(keyboard), disable_web_page_preview=True, parse_mode=ParseMode.MARKDOWN)
+
+
+def m_connect_button(bot, update):
+    bot.delete_message(update.effective_chat.id, update.effective_message.message_id)
+    connect_button(bot, update)
 
 # for test purposes
 def error_callback(bot, update, error):
