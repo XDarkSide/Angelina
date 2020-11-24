@@ -34,13 +34,12 @@ My future updates will be put into This Channel - @AngelinaSupport .
 
 
 HELP_STRINGS = """
-Hey! My name is Rose. I am a group management bot, here to help you get around and keep the order in your groups!
+Hey! My name is Angelina. I am a group management bot, here to help you get around and keep the order in your groups!
 I have lots of handy features, such as flood control, a warning system, a note keeping system, and even predetermined replies on certain keywords.
 
 Helpful commands:
 - /start: Starts me! You've probably already used this.
 - /help: Sends this message; I'll tell you more about myself!
-- /donate: Gives you info on how to support me and my creator.
 
 If you have any bugs or questions on how to use me, have a look at @AngelinaSupport
 
@@ -275,7 +274,7 @@ def get_help(bot: Bot, update: Update):
         update.effective_message.reply_text("Contact me in PM to get the list of possible commands.",
                                             reply_markup=InlineKeyboardMarkup(
                                                 [[InlineKeyboardButton(text="⚜️Help",url="t.me/{}?start=help".format(bot.username))],  
-                                                [InlineKeyboardButton(text="🛡Contact Creator",url="https://t.me/Surv_ivor")]]))
+                                                [InlineKeyboardButton(text="🛡Contact Creator",url="https://t.me/anonyindian")]]))
         return
 
     elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
