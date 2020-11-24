@@ -74,10 +74,8 @@ USER_SETTINGS = {}
 GDPR = []
 
 
-START_IMG = os.environ.get(None)
-
-else:
-  img = START_IMG    
+START_IMG = os.environ.get('START_IMG', None)
+ 
 
 for module_name in ALL_MODULES:
     imported_module = importlib.import_module("cinderella.modules." + module_name)
