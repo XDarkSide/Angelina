@@ -75,6 +75,8 @@ GDPR = []
 
 
 START_IMG = os.environ.get(None)
+START_IMG is None:
+    img = "https://telegra.ph/file/88aadddc9e5eddb475147.jpg"  
  
 
 for module_name in ALL_MODULES:
