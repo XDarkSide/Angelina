@@ -56,7 +56,7 @@ def vercheck() -> str:
 
 
 SOURCE_STRING = """
-⚡I'm built in python3, using the python-telegram-bot library, and am fully opensource - you can find what makes me tick [here](t.me/MissAngelina_Bot)
+⚡I'm built in python3, using the python-telegram-bot library - you can find me [here](t.me/MissAngelina_Bot)
 """
 
 
@@ -163,8 +163,7 @@ def start(bot: Bot, update: Update, args: List[str]):
         else:
             send_start(bot, update)
     else:
-        update.effective_message.reply_text("Heya,{} Here..\nHow can I help you? 🙂".format(bot.first_name),reply_markup=InlineKeyboardMarkup(
-                                                [[InlineKeyboardButton(text="⚜️Help",url="t.me/{}?start=help".format(bot.username))]]))
+        update.effective_message.reply_text("Heya, I am {} \PM me if you have any questions on how to use me!".format(bot.first_name))
 
 def send_start(bot, update):
     #Try to remove old message
