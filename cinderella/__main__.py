@@ -163,7 +163,7 @@ def start(bot: Bot, update: Update, args: List[str]):
         else:
             send_start(bot, update)
     else:
-        update.effective_message.reply_text("Heya, I am {} \PM me if you have any questions on how to use me!".format(bot.first_name))
+        update.effective_message.reply_text("Heya, I am {} \nPM me if you have any questions on how to use me!".format(bot.first_name))
 
 def send_start(bot, update):
     #Try to remove old message
