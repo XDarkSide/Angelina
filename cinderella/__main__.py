@@ -74,7 +74,6 @@ USER_SETTINGS = {}
 GDPR = []
 
 
-
 for module_name in ALL_MODULES:
     imported_module = importlib.import_module("cinderella.modules." + module_name)
     if not hasattr(imported_module, "__mod_name__"):
@@ -160,8 +159,7 @@ def start(bot: Bot, update: Update, args: List[str]):
         update.effective_message.reply_text("Heya,{} Here..\nHow can I help you? 🙂".format(bot.first_name),reply_markup=InlineKeyboardMarkup(
                                                 [[InlineKeyboardButton(text="⚜️Help",url="t.me/{}?start=help".format(bot.username))]]))
 
-def send_start(bot, update):
-    
+   
 
 # for test purposes
 def error_callback(bot, update, error):
