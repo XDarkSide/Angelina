@@ -74,7 +74,7 @@ USER_SETTINGS = {}
 GDPR = []
 
 
-START_IMG = os.environ.get('START_IMG', None)
+START_IMG = os.environ.get(None)
  
 
 for module_name in ALL_MODULES:
