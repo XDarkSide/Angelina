@@ -80,9 +80,14 @@ def new_fed(bot: Bot, update: Update):
         update.effective_message.reply_text("Please run this command in my PM only!")
         return
  
+     if not fednam:
+        update.effective_message.reply_text("Please Specify a name for federation!")
+        return
+
     if fedowner:
         update.effective_message.reply_text("Only one federation per person.")
-    
+
+   
     else:
         if not fednam == '':
             fed_id = str(uuid.uuid4())
