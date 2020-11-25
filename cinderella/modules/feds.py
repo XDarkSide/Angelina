@@ -79,9 +79,7 @@ def new_fed(bot: Bot, update: Update):
     if chat.type != "private":
         update.effective_message.reply_text("Please run this command in my PM only!")
         return
- if data_type is None:
-        msg.reply_text("Please Specify a Federation Name!")
-        return ""
+ 
     if fedowner:
         update.effective_message.reply_text("Only one federation per person.")
     else:
@@ -93,7 +91,12 @@ def new_fed(bot: Bot, update: Update):
                 fed_id = fed_name
 
             x = sql.new_fed(user.id, fed_name, fed_id)
-            if not x:
+        
+	if data_type is None:
+        msg.reply_text("Please Specify a Federation Name!")
+        return ""
+	
+	if not x:
                 update.effective_message.reply_text("Failed to create federation!")
                 return
 
