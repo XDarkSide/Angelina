@@ -79,6 +79,9 @@ def new_fed(bot: Bot, update: Update):
     if chat.type != "private":
         update.effective_message.reply_text("Please run this command in my PM only!")
         return
+ if data_type is None:
+        msg.reply_text("Please Specify a Federation Name!")
+        return ""
     if fedowner:
         update.effective_message.reply_text("Only one federation per person.")
     else:
