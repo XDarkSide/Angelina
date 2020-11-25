@@ -82,6 +82,9 @@ def new_fed(bot: Bot, update: Update):
  
     if fedowner:
         update.effective_message.reply_text("Only one federation per person.")
+    if fednam is None:
+        message.text.split.reply_text("Please Specify a Federation Name!")
+        return ""
     else:
         if not fednam == '':
             fed_id = str(uuid.uuid4())
