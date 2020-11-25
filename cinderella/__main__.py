@@ -26,17 +26,16 @@ My future updates will be put into This Channel - @AngelinaSupport .
 
 HELP_STRINGS = """
 
-Hello! my name *{}*.
+Hey! My name is Angelina. I am a group management bot, here to help you get around and keep the order in your groups!
+I have lots of handy features, such as flood control, a warning system, a note keeping system, and even predetermined replies on certain keywords.
 
-*Main* available commands:
- - /start: Start the bot...
- - /help: help....
- - /settings:
-   - in PM: To find out what SETTINGS you have set....
-   - in a group:
+Helpful commands:
+- /start: Starts me! You've probably already used this.
+- /help: Sends this message; I'll tell you more about myself!
 
-{}
-And the following:
+If you have any bugs or questions on how to use me, have a look at @AngelinaSupport.
+ All commands can be used with the following: / !
+
 """.format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll of the following commands  / or ! can  be used...\n")
 
 
