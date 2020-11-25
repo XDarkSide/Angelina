@@ -73,6 +73,14 @@ USER_SETTINGS = {}
 
 GDPR = []
 
+
+START_IMG = os.environ.get('START_IMG', None)
+if START_IMG is None:
+    img = "https://telegra.ph/file/88aadddc9e5eddb475147.jpg"
+else:
+  img = START_IMG 
+
+
 for module_name in ALL_MODULES:
     imported_module = importlib.import_module("cinderella.modules." + module_name)
     if not hasattr(imported_module, "__mod_name__"):
@@ -172,7 +180,7 @@ def send_start(bot, update):
     keyboard = [[InlineKeyboardButton(text="🤝Help",callback_data="help_back"),InlineKeyboardButton(text="🛡Creator🛡",url="https://t.me/anonyindian")]]
     keyboard += [[InlineKeyboardButton(text="🌐Connect Group", callback_data="main_connect"),InlineKeyboardButton(text="⚜️Add Me⚜️",url="t.me/{}?startgroup=true".format(bot.username))]]
 
-    update.effective_message.reply_photo( PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_NAME, OWNER_ID), 
+    update.effective_message.reply_photo(img, PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_NAME, OWNER_ID), 
                                          reply_markup=InlineKeyboardMarkup(keyboard), disable_web_page_preview=True, parse_mode=ParseMode.MARKDOWN)
 
 
