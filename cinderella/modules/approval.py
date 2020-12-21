@@ -1,5 +1,5 @@
 from cinderella.modules.disable import DisableAbleCommandHandler
-from cinderella import dispatcher, DRAGONS, telethn
+from cinderella import dispatcher, telethn
 from cinderella.modules.helper_funcs.extraction import extract_user
 from telegram.ext import CallbackContext, run_async
 import cinderella.modules.sql.approve_sql as sql
@@ -13,7 +13,7 @@ async def is_administrator(user_id: int, message):
     async for user in message.client.iter_participants(
         message.chat_id, filter=ChannelParticipantsAdmins
     ):
-        if user_id == user.id or user_id in DRAGONS:
+        if user_id == user.id:
             admin = True
             break
     return admin
@@ -112,7 +112,7 @@ async def _(event):
        if not rights:
              await event.answer("You need to be admin to do this.")
              return
-       if creator != event.query.user_id and event.query.user_id not in DRAGONS:
+       if creator != event.query.user_id:
              await event.answer("Only owner of the chat can do this.")
              return
        users = []
@@ -127,7 +127,7 @@ async def _(event):
         if not rights:
              await event.answer("You need to be admin to do this.")
              return
-        if creator != event.query.user_id and event.query.user_id not in DRAGONS:
+        if creator != event.query.user_id:
              await event.answer("Only owner of the chat can cancel this operation.")
              return
         await event.client.edit_message(event.chat_id, event.query.msg_id, f"Removing of all unapproved users has been cancelled.")
@@ -136,7 +136,7 @@ async def _(event):
 async def _(event):
 	 chat = await event.get_chat()
 	 creator = await c(event)
-	 if creator != event.from_id and event.from_id not in DRAGONS:
+	 if creator != event.from_id:
 	     await event.reply("Only the chat owner can unapprove all users at once.")
 	     return
 	 msg = f"Are you sure you would like to unapprove ALL users in {event.chat.title}? This action cannot be undone."
