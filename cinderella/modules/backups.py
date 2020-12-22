@@ -268,10 +268,15 @@ def get_chat(chat_id, chat_data):
         return {"status": False, "value": False}
 
 
-__mod_name__ = "BACKUPS"
+__mod_name__ = "Backups"
 
 __help__ = """
-*Only for chat administrator:*
+Sometimes you wanted to shift your group to any other group and you may also wish to transfer all chats. 
+
+So this module is for persons who wanted to do so.
+
+*Admin commands:*
+
  - /import: reply to a group butler backup file to import as much as possible, making the transfer super simple! Note \
 that files/photos can't be imported due to telegram restrictions.
  - /export: export group data, which will be exported are: rules, notes (documents, images, music, video, audio, voice, text, text buttons)
