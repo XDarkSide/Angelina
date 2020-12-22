@@ -44,7 +44,7 @@ A very helpful module to convert or check the current values of currencies.
 *User command:*
  - /cash: To convert a currency to another.
  
- *Example-*
+ *Example:*
  - To convert 1 US Dollar(USD) to Indian Rupees(INR).
  -> `/cash 1 USD INR`
 """
