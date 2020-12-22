@@ -178,8 +178,10 @@ A good combo is sometimes to pair this up with warn filters!
 *User commands*
  - /blacklist: View the current blacklisted words.
  - /blsticker: See current blacklisted sticker.
+ - /ignoredlist: List of blacklisted users
 
 *Admin commands:*
+ - /ignore : To blacklist users
  - /addblacklist `<triggers>`: Add a trigger to the blacklist. 
  - /unblacklist `<triggers>`: Remove triggers from the blacklist.
  - /rmblacklist `<triggers>`: This command also remove triggers from the blacklist.
@@ -190,9 +192,11 @@ A good combo is sometimes to pair this up with warn filters!
  
  *Note:* `<sticker link>` can be `https://t.me/addstickers/<sticker>` or just `<sticker>` or reply to the sticker message.
  
- *Example*
+ *Examples*
 - Override the blacklist mode for a single filter. Users that says 'boo' will get the blacklist action.
 -> `/addblocklist boo`
+- To blacklist a user 
+-> `/ignore <userid>`
 """
 
 BLACKLIST_HANDLER = DisableAbleCommandHandler("blacklist", blacklist, pass_args=True, admin_ok=True)
