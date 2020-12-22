@@ -276,9 +276,8 @@ Sometimes you wanted to shift your group to any other group and you may also wis
 So this module is for persons who wanted to do so.
 
 *Admin commands:*
-
  - /import: reply to a group butler backup file to import as much as possible, making the transfer super simple! Note \
-that files/photos can't be imported due to telegram restrictions.
+            that files/photos can't be imported due to telegram restrictions.
  - /export: export group data, which will be exported are: rules, notes (documents, images, music, video, audio, voice, text, text buttons)
 """
 
