@@ -105,16 +105,7 @@ def approval(update, context):
 	     message.reply_text(f"{member.user['first_name']} is not an approved user. They are affected by normal commands.")
 
 
-@run_async
-def unapproveall(update, context, await):
-	 message = update.effective_message
-	 chat = await event.get_chat()
-	 creator = await c(event)
-	 if creator != event.from_id and event.from_id not in SUDO_USERS:
-	     await event.reply("Only the chat owner can unapprove all users at once.")
-	     return
-	 msg = f"Are you sure you would like to unapprove ALL users in {event.chat.title}? This action cannot be undone."
-	 await event.client.send_message(event.chat_id, msg, buttons=[[Button.inline('Unapprove all users', b'rmapp')], [Button.inline('Cancel', b'can')]], reply_to=event.id)
+
 
 
 __help__  = """
