@@ -405,18 +405,27 @@ def selfunban(bot: Bot, update: Update, args: List[str]) -> str:
 
 
 __help__ = """
+Some people need to be publicly banned; spammers, annoyances, or just trolls.
+
+This module allows you to do that easily, by exposing some common actions, so everyone will see!
+
+*User commands*
  - /kickme: kicks the user who issued the command
  - /banme: If you give the command you will be trampled out and locked.
 
-*Admin only:*
- - /ban <userhandle>: bans a user. (via handle, or reply)
-  -/sban <userhandle>: silent ban a user. (via handle, or reply)
- - /tban <userhandle> x(m/h/d): bans a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
- - /unban <userhandle>: unbans a user. (via handle, or reply)
- - /kick <userhandle>: kicks a user, (via handle, or reply)
+*Admin commands:*
+ - /ban: Ban a user.
+ - /sban: Silently ban a user, and delete your message.
+ - /tban: Temporarily ban a user.
+ - /unban: Unban a user.
+ - /kick: Kick a user.
+ 
+ *Examples:*
+- Mute a user for two hours.
+-> `/tmute @username 2h`
 """
 
-__mod_name__ = "BANS"
+__mod_name__ = "Bans"
 
 BAN_HANDLER = CommandHandler("ban", ban, pass_args=True, filters=Filters.group)
 TEMPBAN_HANDLER = CommandHandler(["tban", "tempban"], temp_ban, pass_args=True, filters=Filters.group)
