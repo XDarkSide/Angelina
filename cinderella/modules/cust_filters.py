@@ -297,18 +297,20 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
- - /filters: list all active filters in this chat.
+Make your chat more lively with filters; The bot will reply to certain words!
 
-*Admin only:*
- - /filter <keyword> <reply message>: add a filter to this chat. The bot will now reply that message whenever 'keyword'\
-is mentioned. If you reply to a sticker with a keyword, the bot will reply with that sticker. NOTE: all filter \
-keywords are in lowercase. If you want your keyword to be a sentence, use quotes. eg: /filter "hey there" How you \
-doin?
- - /stop <filter keyword>: stop that filter.
- - /stopall: stop all filters
+Filters are case insensitive; every time someone says your trigger words, Rose will reply something else! can be used to create your own commands, if desired.
+
+*User commands*
+ - /filters: List all chat filters.
+
+*Admin commands:*
+ - /filter `<trigger> <reply>`: Every time someone says "trigger", the bot will reply with "sentence". For multiple word filters, quote the trigger.
+ - /stop `<trigger>`: Stop the bot from replying to "trigger".
+ - /stopall: Stop *ALL* filters in the current chat. This cannot be undone.
 """
 
-__mod_name__ = "FILTERS"
+__mod_name__ = "Filters"
 
 FILTER_HANDLER = CommandHandler("filter", filters)
 STOP_HANDLER = CommandHandler("stop", stop_filter)
