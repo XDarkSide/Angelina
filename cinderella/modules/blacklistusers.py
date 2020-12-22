@@ -142,11 +142,7 @@ def __user_info__(user_id):
 
     return text
 
-__help__ = """
-/ignore : blacklist users
-/notice : 
-/ignoredlist : List of blacklisted users 
-"""
+
 
 __mod_name__ = "Ignore/Notice"
 
