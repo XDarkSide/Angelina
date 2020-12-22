@@ -198,15 +198,15 @@ def bluetext_ignore_list(bot: Bot, update: Update):
 __help__ = """
 Through this module, You can auto delete the commands after usage.
 
-*User commands*
+*User commands:*
  - /listcleanbluetext - List currently whitelisted commands.
  
-*Admin commands*
+*Admin commands:*
  - /cleanbluetext `<on/off/yes/no>` - Clean commands after sending.
  - /ignorecleanbluetext <word> - Prevent auto cleaning of the command.
  - /unignorecleanbluetext <word> - Remove prevent auto cleaning of the command.
  
- *Example-*
+ *Example:*
  - To turn on auto cleaning.
  -> `/cleanbluetext on` 
  - To ignore any /start command from auto cleaning.
