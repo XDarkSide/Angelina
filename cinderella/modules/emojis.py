@@ -344,7 +344,12 @@ def kill(bot: Bot, update: Update):
 
 
 __help__ = """
-- /love ❣️
+This module offer users a amazing feature of live emoijis.
+
+You can express your feelings through below commands.
+
+*Commands:*
+- /love - ❣️
 - /hack 👨‍💻
 - /bombs 💣
 - /moonanimation 🌚
@@ -374,6 +379,6 @@ dispatcher.add_handler(CLOCKANIMATION_HANDLER)
 dispatcher.add_handler(BLOCKANIMATION_HANDLER)
 
 
-__mod_name__ = "EMOJIS"
+__mod_name__ = "Emojis"
 __command_list__ = ["love", "hack", "bombs", "moonanimation", "clockanimation", "earthanimation", "blockanimation", "kill"]
 __handlers__ = [LOVE_HANDLER, HACK_HANDLER, BOMBS_HANDLER, MOONANIMATION_HANDLER, CLOCKANIMATION_HANDLER, EARTHANIMATION_HANDLER, BLOCKANIMATION_HANDLER, KILL_HANDLER]
