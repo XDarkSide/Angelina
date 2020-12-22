@@ -41,6 +41,7 @@ This is a module for extra commands either funny or serious ones....
 - /judge: as a reply to someone, checks if they're lying or not!
 - /weebify: as a reply to a message, "weebifies" the message.
 - /shout `<word>`: shout the specified word in the chat.
+- /t: while replying to a message, will reply with a grammar corrected version
 
 """
 
