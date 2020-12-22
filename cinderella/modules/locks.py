@@ -323,18 +323,23 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
+Do stickers annoy you? or want to avoid people sharing links? or pictures? You're in the right place!
+
+The locks module allows you to lock away some common items in the telegram world; the bot will automatically delete them!
+
+*User commands*
  - /locktypes: a list of possible locktypes
 
-*Admin only:*
- - /lock <type>: lock items of a certain type (not available in private)
- - /unlock <type>: unlock items of a certain type (not available in private)
+*Admin commands:*
+ - /lock `<type>`: lock items of a certain type (not available in private)
+ - /unlock `<type>`: unlock items of a certain type (not available in private)
  - /locks: the current list of locks in this chat.
 
-Locks can be used to restrict a group's users.
-eg:
-Locking urls will auto-delete all messages with urls which haven't been whitelisted, locking stickers will delete all \
-stickers, etc.
-Locking bots will stop non-admins from adding bots to the chat.
+*Examples:*
+ - Lock stickers with:
+ -> `/lock sticker`
+ - You can lock/unlock multiple items by chaining them:
+ -> `/lock sticker photo gif video`
 """
 
 LOCKTYPES_HANDLER = DisableAbleCommandHandler("locktypes", locktypes)
@@ -351,5 +356,5 @@ dispatcher.add_handler(LOCKED_HANDLER)
 dispatcher.add_handler(LOCKABLE_HANDLER, PERM_GROUP)
 dispatcher.add_handler(RESTRICTION_HANDLER, REST_GROUP)
 
-__mod_name__ = "LOCKS"
+__mod_name__ = "Locks"
 __handlers__ = [LOCKTYPES_HANDLER, LOCK_HANDLER, UNLOCK_HANDLER, LOCKED_HANDLER, (LOCKABLE_HANDLER, PERM_GROUP), (RESTRICTION_HANDLER, REST_GROUP)]
