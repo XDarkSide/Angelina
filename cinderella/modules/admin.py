@@ -542,9 +542,12 @@ def __chat_settings__(chat_id, user_id):
         dispatcher.bot.get_chat_member(chat_id, user_id).status in ("administrator", "creator"))
 
 __help__ = """
+ Make it easy to promote and demote users with the admin module!
+
+*User commands:*
  - /adminlist: list of admins in the chat
 
-*Admin only:*
+*Admin commands:*
  - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.
  - /unpin: unpins the currently pinned message
  - /invitelink: gets invitelink
