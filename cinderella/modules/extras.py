@@ -29,6 +29,18 @@ This is a module for extra commands either funny or serious ones....
 
 *Commands:*
 - /abuse : To Abuse Someone.
+- /runs: reply a random string from an array of replies.
+- /slap: slap a user, or get slapped if not a reply.
+- /shrug : get shrug XD.
+- /table : get flip/unflip :v.
+- /decide : Randomly answers yes/no/maybe
+- /toss : Tosses A coin
+- /bluetext : check urself :V
+- /roll : Roll a dice.
+- /rlg : Join ears,nose,mouth and create an emo ;-;
+- /judge: as a reply to someone, checks if they're lying or not!
+- /weebify: as a reply to a message, "weebifies" the message.
+- /shout `<word>`: shout the specified word in the chat.
 
 """
 
