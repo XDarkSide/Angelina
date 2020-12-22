@@ -127,7 +127,6 @@ __help__ = """
 When marked as AFK, any mentions will be replied to with a message to say you're not available!
 
 *User commands:*
- 
  - /afk `<reason>`: mark yourself as AFK(away from keyboard).
  - brb `<reason>`: same as the afk command - but not a command.
 """
