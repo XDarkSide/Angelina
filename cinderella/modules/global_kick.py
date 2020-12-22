@@ -180,12 +180,7 @@ def gkickreset(bot: Bot, update: Update, args: List[str]):
     sql.gkick_reset(user_id)
     return
 
-__help__ = """
-*Admin only:*
-- /gkick: To kick a user Globaly
-- /gkickset: Set global kick status of a person
-- /gkickreser: Reset global kick status of a person
-"""
+
 
 __mod_name__ = "GLOBAL KICK"
 			
