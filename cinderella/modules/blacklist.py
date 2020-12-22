@@ -173,15 +173,22 @@ the message will immediately be deleted.
 
 A good combo is sometimes to pair this up with warn filters!
 
-*NOTE:* blacklists do not affect group admins.
+*Note:* blacklists do not affect group admins.
 
 *User commands*
  - /blacklist: View the current blacklisted words.
+ - /blsticker: See current blacklisted sticker.
 
 *Admin commands:*
  - /addblacklist `<triggers>`: Add a trigger to the blacklist. 
  - /unblacklist `<triggers>`: Remove triggers from the blacklist.
  - /rmblacklist `<triggers>`: This command also remove triggers from the blacklist.
+ - /addblsticker `<sticker link>`: Add the sticker trigger to the black list. Can be added via reply sticker.
+ - /unblsticker `<sticker link>`: Remove triggered stickers from blacklist.
+ - /rmblsticker `<sticker link>`: This also remove triggered stickers from blacklist.
+ - /blstickermode ban/tban/mute/tmute .
+ 
+ *Note:* `<sticker link>` can be `https://t.me/addstickers/<sticker>` or just `<sticker>` or reply to the sticker message.
  
  *Example*
 - Override the blacklist mode for a single filter. Users that says 'boo' will get the blacklist action.
