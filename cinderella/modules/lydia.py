@@ -1,71 +1,95 @@
+import html
 # AI module using Intellivoid's Coffeehouse API by @TheRealPhoenix
+from time import sleep, time
 
-from time import time, sleep
-from coffeehouse.lydia import LydiaAI
+import cinderella.modules.sql.chatbot_sql as sql
 from coffeehouse.api import API
 from coffeehouse.exception import CoffeeHouseError as CFError
-
-from telegram import Message, Chat, User, Update, Bot
-from telegram.ext import CommandHandler, MessageHandler, Filters, run_async
-
-from cinderella import dispatcher, LYDIA_API, OWNER_ID
-import cinderella.modules.sql.lydia_sql as sql
+from coffeehouse.lydia import LydiaAI
+from cinderella import LYDIA_API, OWNER_ID, dispatcher
+from cinderella.modules.helper_funcs.chat_status import user_admin
 from cinderella.modules.helper_funcs.filters import CustomFilters
-
+from cinderella.modules.log_channel import gloggable
+from telegram import Update
+from telegram.error import BadRequest, RetryAfter, Unauthorized
+from telegram.ext import (CallbackContext, CommandHandler, Filters,
+                          MessageHandler, run_async)
+from telegram.utils.helpers import mention_html
 
 CoffeeHouseAPI = API(LYDIA_API)
 api_client = LydiaAI(CoffeeHouseAPI)
 
 
 @run_async
-def add_chat(bot: Bot, update: Update):
+@user_admin
+@gloggable
+def add_chat(update: Update, context: CallbackContext):
     global api_client
-    chat_id = update.effective_chat.id
+    chat = update.effective_chat
     msg = update.effective_message
-    is_chat = sql.is_chat(chat_id)
+    user = update.effective_user
+    is_chat = sql.is_chat(chat.id)
     if not is_chat:
         ses = api_client.create_session()
         ses_id = str(ses.id)
         expires = str(ses.expires)
-        sql.set_ses(chat_id, ses_id, expires)
-        msg.reply_text("Lydia successfully enabled for this chat!")
+        sql.set_ses(chat.id, ses_id, expires)
+        msg.reply_text("AI successfully enabled for this chat!")
+        message = (
+            f"<b>{html.escape(chat.title)}:</b>\n"
+            f"#AI_ENABLED\n"
+            f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
+        )
+        return message
     else:
-        msg.reply_text("Lydia is already enabled for this chat!")
-        
-        
+        msg.reply_text("AI is already enabled for this chat!")
+        return ""
+
+
 @run_async
-def remove_chat(bot: Bot, update: Update):
+@user_admin
+@gloggable
+def remove_chat(update: Update, context: CallbackContext):
     msg = update.effective_message
-    chat_id = update.effective_chat.id
-    is_chat = sql.is_chat(chat_id)
+    chat = update.effective_chat
+    user = update.effective_user
+    is_chat = sql.is_chat(chat.id)
     if not is_chat:
-        msg.reply_text("Lydia isn't enabled here in the first place!")
+        msg.reply_text("AI isn't enabled here in the first place!")
+        return ""
     else:
-        sql.rem_chat(chat_id)
-        msg.reply_text("Lydia disabled successfully!")
-        
-        
-def check_message(bot: Bot, message):
+        sql.rem_chat(chat.id)
+        msg.reply_text("AI disabled successfully!")
+        message = (
+            f"<b>{html.escape(chat.title)}:</b>\n"
+            f"#AI_DISABLED\n"
+            f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
+        )
+        return message
+
+
+def check_message(context: CallbackContext, message):
     reply_msg = message.reply_to_message
-    if message.text.lower() == "cinderella":
+    if message.text.lower() == "angelina":
         return True
     if reply_msg:
-        if reply_msg.from_user.id == bot.get_me().id:
+        if reply_msg.from_user.id == context.bot.get_me().id:
             return True
     else:
         return False
-                
-        
+
+
 @run_async
-def lydia(bot: Bot, update: Update):
+def chatbot(update: Update, context: CallbackContext):
     global api_client
     msg = update.effective_message
     chat_id = update.effective_chat.id
     is_chat = sql.is_chat(chat_id)
+    bot = context.bot
     if not is_chat:
         return
     if msg.text and not msg.document:
-        if not check_message(bot, msg):
+        if not check_message(context, msg):
             return
         sesh, exp = sql.get_ses(chat_id)
         query = msg.text
@@ -84,25 +108,56 @@ def lydia(bot: Bot, update: Update):
             sleep(0.3)
             msg.reply_text(rep, timeout=60)
         except CFError as e:
-            bot.send_message(OWNER_ID, f"lydia error: {e} occurred in {chat_id}!")
-                    
+            bot.send_message(OWNER_ID,
+                             f"Chatbot error: {e} occurred in {chat_id}!")
 
-__mod_name__ = "LYDIA/CHATBOT"
 
-__help__ = """
-Commands
- - /elydia : Enables Lydia mode in the chat.
- - /dlydia  : Disables Lydia mode in the chat.
- 
- 
+@run_async
+def list_chatbot_chats(update: Update, context: CallbackContext):
+    chats = sql.get_all_chats()
+    text = "<b>AI-Enabled Chats</b>\n"
+    for chat in chats:
+        try:
+            x = context.bot.get_chat(int(*chat))
+            name = x.title if x.title else x.first_name
+            text += f"• <code>{name}</code>\n"
+        except BadRequest:
+            sql.rem_chat(*chat)
+        except Unauthorized:
+            sql.rem_chat(*chat)
+        except RetryAfter as e:
+            sleep(e.retry_after)
+    update.effective_message.reply_text(text, parse_mode="HTML")
+
+
+__help__ = f"""
+
+
+*Commands:* 
+*Admins only:*
+ • `/eaichat`*:* Enables AI bot mode in the chat.
+ • `/daichat`*:* Disables AI Chat mode in the chat.
+
+
 """
-                  
-ADD_CHAT_HANDLER = CommandHandler("elydia", add_chat, filters=CustomFilters.dev_filter)
-REMOVE_CHAT_HANDLER = CommandHandler("dlydia", remove_chat, filters=CustomFilters.dev_filter)
-LYDIA_HANDLER = MessageHandler(Filters.text & (~Filters.regex(r"^#[^\s]+") & ~Filters.regex(r"^!")
-                                  & ~Filters.regex(r"^s\/")), lydia)
+
+ADD_CHAT_HANDLER = CommandHandler("eaichat", add_chat)
+REMOVE_CHAT_HANDLER = CommandHandler("daichat", remove_chat)
+CHATBOT_HANDLER = MessageHandler(
+    Filters.text & (~Filters.regex(r"^#[^\s]+") & ~Filters.regex(r"^!")
+                    & ~Filters.regex(r"^\/")), chatbot)
+LIST_CB_CHATS_HANDLER = CommandHandler(
+    "listaichats", list_chatbot_chats, filters=CustomFilters.dev_filter)
 # Filters for ignoring #note messages, !commands and sed.
 
 dispatcher.add_handler(ADD_CHAT_HANDLER)
 dispatcher.add_handler(REMOVE_CHAT_HANDLER)
-dispatcher.add_handler(LYDIA_HANDLER)
+dispatcher.add_handler(CHATBOT_HANDLER)
+dispatcher.add_handler(LIST_CB_CHATS_HANDLER)
+
+__mod_name__ = "Chatbot"
+__command_list__ = ["eaichat", "daichat", "listaichats"]
+__handlers__ = [
+    ADD_CHAT_HANDLER, REMOVE_CHAT_HANDLER, CHATBOT_HANDLER,
+    LIST_CB_CHATS_HANDLER
+]
