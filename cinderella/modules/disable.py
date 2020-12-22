@@ -287,16 +287,22 @@ if is_module_loaded(FILENAME):
     dispatcher.add_handler(TOGGLE_HANDLER)
 
     __help__ = """
-    - /cmds: check the current status of disabled commands
-    *Admin only:*
-    - /enable <cmd name>: enable that command
-    - /disable <cmd name>: disable that command
-    - /enablemodule <module name>: enable all commands in that module
-    - /disablemodule <module name>: disable all commands in that module
-    - /listcmds: list all possible toggleable commands
+    Not everyone wants every feature that Rose offers. Some commands are best left unused; to avoid spam and abuse.
+
+    This allows you to disable some commonly used commands, so noone can use them. It'll also allow you to autodelete them, stopping people from bluetexting.
+    
+    *User commands:*
+    - /cmds: Check the current status of disabled commands
+    
+    *Admin commands:*
+    - /disable `<commandname>`: Stop users from using "commandname" in this group.
+    - /enable `<item name>`: Allow users from using "commandname" in this group.
+    - /disablemodule `<module name>`: Disable all commands in that module.
+    - /enablemodule `<module name>`: Enable all commands in that module.
+    - /listcmds: List all possible toggleable commands.
     """
 
-    __mod_name__ = "COMMANDA DIS/EN"
+    __mod_name__ = "Disabling"
 
 else:
     DisableAbleCommandHandler = CommandHandler
