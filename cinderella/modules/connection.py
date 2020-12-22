@@ -288,13 +288,13 @@ Sometimes, you just want to add some notes and filters to a group chat, but you 
 
 This allows you to connect to a chat's database, and add things to it without the chat knowing about it! For obvious reasons, you need to be an admin to add things; but any member can view your data. (banned/kicked users can't!)
 
- - /connect: connect a chat (Can be done in a group by /connect or /connect <chat id> in PM)
- - /connection: list connected chats
- - /disconnect: disconnect from a chat
- - /helpconnect: list available commands that can be done remotely
-
 *Admin commands:*
- - /allowconnect <yes/no>: allow a user to connect to a chat
+ - /connect <chatid/username>: Connect to the specified chat, allowing you to view/edit contents.
+ - /disconnect: Disconnect from the current chat.
+ - /connection: See information about the currently connected chat.
+ - /allowconnect `<yes/no>`: allow a user to connect to a chat
+ 
+ You can retrieve the chat id by using the `/id` command in your chat. Don't be surprised if the id is negative; all super groups have negative ids.
 """
 
 CONNECT_CHAT_HANDLER = CommandHandler("connect", connect_chat, pass_args=True)
