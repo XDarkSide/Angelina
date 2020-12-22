@@ -175,7 +175,7 @@ A good combo is sometimes to pair this up with warn filters!
 
 *Note:* blacklists do not affect group admins.
 
-*User commands*
+*User commands:*
  - /blacklist: View the current blacklisted words.
  - /blsticker: See current blacklisted sticker.
  - /ignoredlist: List of blacklisted users
@@ -192,7 +192,7 @@ A good combo is sometimes to pair this up with warn filters!
  
  *Note:* `<sticker link>` can be `https://t.me/addstickers/<sticker>` or just `<sticker>` or reply to the sticker message.
  
- *Examples*
+ *Examples:*
 - Override the blacklist mode for a single filter. Users that says 'boo' will get the blacklist action.
 -> `/addblocklist boo`
 - To blacklist a user 
