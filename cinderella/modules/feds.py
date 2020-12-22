@@ -1682,37 +1682,39 @@ def get_chat(chat_id, chat_data):
 __mod_name__ = "FEDERATIONS"
 
 __help__ = """
-Ah, group management. Everything is fun, until the spammer starts entering your group, and you have to block it. Then you need to start banning more, and more, and it hurts.
-But then you have many groups, and you don't want this spammer to be in one of your groups - how can you deal? Do you have to manually block it, in all your groups?
-No longer! With Federation, you can make a ban in one chat overlap with all other chats.
-You can even designate admin federations, so your trusted admin can ban all the chats you want to protect.
-Command:
- - /newfed <fedname>: Create a new Federation with the name given. Users are only allowed to have one Federation. This method can also be used to rename the Federation. (max. 64 characters)
+Ah, group management. It's all fun and games, until you start getting spammers in, and you need to ban them. Then you need to start banning more, and more, and it gets painful.
+But then you have multiple groups, and you don't want these spammers in any of your groups - how can you deal? Do you have to ban them manually, in all your groups?
+
+No more! With federations, you can make a ban in one chat overlap to all your other chats.
+You can even appoint federation admins, so that your trustworthiest admins can ban across all the chats that you want to protect.
+
+*Commands:*
+ - /newfed `<fedname>`: Create a new Federation with the name given. Users are only allowed to have one Federation. This method can also be used to rename the Federation. (max. 64 characters)
  - /delfed: Delete your Federation, and any information related to it. Will not cancel blocked users.
- - /fedinfo <FedID>: Information about the specified Federation.
- - /joinfed <FedID>: Join the current chat to the Federation. Only chat owners can do this. Every chat can only be in one Federation.
- - /leavefed <FedID>: Leave the Federation given. Only chat owners can do this.
- - /fpromote <user>: Promote Users to give fed admin. Fed owner only.
- - /fdemote <user>: Drops the User from the admin Federation to a normal User. Fed owner only.
- - /fban <user>: Prohibits users from all federations where this chat takes place, and executors have control over.
- - /unfban <user>: Cancel User from all federations where this chat takes place, and that the executor has control over.
+ - /fedinfo `<FedID>`: Information about the specified Federation.
+ - /joinfed `<FedID>`: Join the current chat to the Federation. Only chat owners can do this. Every chat can only be in one Federation.
+ - /leavefed `<FedID>`: Leave the Federation given. Only chat owners can do this.
+ - /fpromote `<user>`: Promote Users to give fed admin. Fed owner only.
+ - /fdemote `<user>`: Drops the User from the admin Federation to a normal User. Fed owner only.
+ - /fban `<user>`: Prohibits users from all federations where this chat takes place, and executors have control over.
+ - /unfban `<user>`: Cancel User from all federations where this chat takes place, and that the executor has control over.
  - /setfrules: Arrange Federation rules.
  - /frules: See Federation regulations.
  - /chatfed: See the Federation in the current chat.
  - /fedadmins: Show Federation admin.
  - /fbanlist: Displays all users who are victimized at the Federation at this time.
- - /fednotif <on / off>: Federation settings not in PM when there are users who are fban / unfban.
+ - /fednotif `<on / off>`: Federation settings not in PM when there are users who are fban / unfban.
  - /fedchats: Get all the chats that are connected in the Federation.
  - /importfbans: Reply to the Federation backup message file to import the banned list to the Federation now.
  - /fbanstat: Shows if you/or the user you are replying to or their username is fbanned somewhere or not.
- - /subfed <FedId>: Subscribe your federation to another. Users banned in the subscribed fed will also be banned in this one.
-            Note: This does not affect your banlist. You just inherit any bans.
- - /unsubfed <FedId>: Unsubscribes your federation from another. Bans from the other fed will no longer take effect.
+ - /subfed `<FedId>`: Subscribe your federation to another. Users banned in the subscribed fed will also be banned in this one.
+                      Note: This does not affect your banlist. You just inherit any bans.
+ - /unsubfed `<FedId>`: Unsubscribes your federation from another. Bans from the other fed will no longer take effect.
  - /fedsubs: List all federations your federation is subscribed to.
  - /setfedlog: Sets the current chat as the federation log. All federation events will be logged here.
  - /unsetfedlog: Unset the federation log. Events will no longer be logged.
  - /fbroadcast:Sent a Message to groups.
- - /myfeds: To know Federations Created by you.
+ - /myfeds: To know Federation created by you and where you are admin.
 """
 
 NEW_FED_HANDLER = CommandHandler("newfed", new_fed)
