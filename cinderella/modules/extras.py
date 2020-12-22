@@ -42,6 +42,7 @@ This is a module for extra commands either funny or serious ones....
 - /weebify: as a reply to a message, "weebifies" the message.
 - /shout `<word>`: shout the specified word in the chat.
 - /t: while replying to a message, will reply with a grammar corrected version
+- /tr (language code) as reply to a long message.
 
 """
 
