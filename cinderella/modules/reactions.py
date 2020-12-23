@@ -223,9 +223,6 @@ def react(bot: Bot, update: Update):
       	message.reply_text(react)
 
 
-__help__ = """
- - /react: Reacts with a random reaction
-"""
 
 REACT_HANDLER = DisableAbleCommandHandler("react", react)
 
