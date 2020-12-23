@@ -43,6 +43,7 @@ This is a module for extra commands either funny or serious ones....
 - /shout `<word>`: shout the specified word in the chat.
 - /t: while replying to a message, will reply with a grammar corrected version
 - /tr (language code) as reply to a long message.
+- /reverse: Does a reverse image search of the media which it was replied to.
 
 """
 
