@@ -48,7 +48,7 @@ Want to get the lyrics of your favorite songs straight from the app? This module
 -> `/lyrics despacito`
 """
 
-__mod_name__ = "SONG LYRICS"
+__mod_name__ = "Song Lyrics"
 
 
 
