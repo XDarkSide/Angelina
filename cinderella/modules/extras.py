@@ -90,4 +90,4 @@ OWNER_TAG_HANDLER = RegexHandler("(?i)@anonyindian(s)?", anonyindian)
 
 dispatcher.add_handler(ABUSE_HANDLER)
 dispatcher.add_handler(SOURCE_HANDLER)
-dispatcher.add_handler(OWNER_TAG_HANDLER, ANONY_STRINGS)
+dispatcher.add_handler(OWNER_TAG_HANDLER)
