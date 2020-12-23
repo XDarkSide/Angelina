@@ -117,12 +117,14 @@ def stats(bot: Bot, update: Update):
 
 
 __help__ = """
- - /id: get the current group id. If used by replying to a message, gets that user's id.
- - /info: get information about a user.
+An "odds and ends" module for small, simple commands which don't really fit anywhere.
+
+*Commands:*
+ - /id: Get the current group id. If used by replying to a message, gets that user's id.
+ - /info: Get information about a user.
  - /gifid: Get gif ID.
- - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
- - /imdb <movie or TV series name>: View IMDb results for selected movie or TV series
- - /direct <link>: Download from a link
+ - /markdownhelp: Quick summary of how markdown works in telegram - can only be called in private chats.
+ - /direct `<link>`: Download from a link
 """
 
 ID_HANDLER = DisableAbleCommandHandler("id", get_id, pass_args=True)
@@ -137,6 +139,6 @@ dispatcher.add_handler(ECHO_HANDLER)
 dispatcher.add_handler(MD_HELP_HANDLER)
 dispatcher.add_handler(STATS_HANDLER)
 
-__mod_name__ = "MISC"
+__mod_name__ = "Misc"
 __command_list__ = ["id", "echo"]
 __handlers__ = [ID_HANDLER, ECHO_HANDLER, MD_HELP_HANDLER, STATS_HANDLER]
