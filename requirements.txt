@@ -14,6 +14,7 @@ wikipedia
 kbbi
 feedparser
 gtts
+telethon
 alphabet_detector
 psycopg2-binary
 feedparser
