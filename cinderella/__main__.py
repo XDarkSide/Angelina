@@ -123,7 +123,7 @@ def start(bot: Bot, update: Update, args: List[str]):
 
             elif args[0][1:].isdigit() and "rules" in IMPORTED:
                 IMPORTED["rules"].send_rules(update, args[0], from_pm=True)
-
+        
         else:
             first_name = update.effective_user.first_name
             update.effective_message.reply_text(
@@ -131,6 +131,15 @@ def start(bot: Bot, update: Update, args: List[str]):
                 parse_mode=ParseMode.MARKDOWN)
     else:
         update.effective_message.reply_text("Heya:), I am Angelina!\nPM me if you have any questions on how to use me!")
+        
+ def send_start(bot, update):
+    #Try to remove old message
+    try:
+        query = update.callback_query
+        query.message.delete()
+    except:
+        pass
+    text = PM_START_TEXT
 
 
 # for test purposes
