@@ -1,172 +1,298 @@
-from cinderella.modules.disable import DisableAbleCommandHandler
-from cinderella import dispatcher, SUDO_USERS, telethn
-from cinderella.modules.helper_funcs.extraction import extract_user
-from telegram.ext import CallbackContext, run_async
+import os
 import cinderella.modules.sql.approve_sql as sql
-from cinderella.modules.helper_funcs.chat_status import (bot_admin, user_admin)
-from telegram import ParseMode
-from telethon import events, Button
-from telethon.tl.types import ChannelParticipantsAdmins, ChannelParticipantCreator
+from cinderella import telethn
+from cinderella import DB_URI 
+from cinderella.events import register
+from telethon import types
+from telethon.tl import functions
 
-async def is_administrator(user_id: int, message):
-    admin = False
-    async for user in message.client.iter_participants(
-        message.chat_id, filter=ChannelParticipantsAdmins
-    ):
-        if user_id == user.id or user_id in SUDO_USERS:
-            admin = True
-            break
-    return admin
 
-async def c(event):
-   msg = 0
-   async for x in event.client.iter_participants(event.chat_id, filter=ChannelParticipantsAdmins):
-    if isinstance(x.participant, ChannelParticipantCreator):
-       msg += x.id
-   return msg
 
-@user_admin
-@run_async
-def approve(update, context):
-	 message = update.effective_message
-	 chat_title = message.chat.title
-	 chat = update.effective_chat
-	 args = context.args
-	 user_id = extract_user(message, args)
-	 if not user_id:
-	     message.reply_text("I don't know who you're talking about, you're going to need to specify a user!")
-	     return ""
-	 member = chat.get_member(int(user_id))
-	 if member.status == "administrator" or member.status == "creator":
-	     message.reply_text(f"User is already admin - locks, blocklists, and antiflood already don't apply to them.")
-	     return
-	 if sql.is_approved(message.chat_id, user_id):
-	     message.reply_text(f"[{member.user['first_name']}](tg://user?id={member.user['id']}) is already approved in {chat_title}", parse_mode=ParseMode.MARKDOWN)
-	     return
-	 sql.approve(message.chat_id, user_id)
-	 message.reply_text(f"[{member.user['first_name']}](tg://user?id={member.user['id']}) has been approved in {chat_title}! They will now be ignored by automated admin actions like locks, blocklists, and antiflood.", parse_mode=ParseMode.MARKDOWN)
-     
-@user_admin
-@run_async
-def disapprove(update, context):
-	 message = update.effective_message
-	 chat_title = message.chat.title
-	 chat = update.effective_chat
-	 args = context.args
-	 user_id = extract_user(message, args)
-	 if not user_id:
-	     message.reply_text("I don't know who you're talking about, you're going to need to specify a user!")
-	     return ""
-	 member = chat.get_member(int(user_id))
-	 if member.status == "administrator" or member.status == "creator":
-	     message.reply_text("This user is an admin, they can't be unapproved.")
-	     return
-	 if not sql.is_approved(message.chat_id, user_id):
-	     message.reply_text(f"{member.user['first_name']} isn't approved yet!")
-	     return
-	 sql.disapprove(message.chat_id, user_id)
-	 message.reply_text(f"{member.user['first_name']} is no longer approved in {chat_title}.")
-     
-@user_admin
-@run_async
-def approved(update, context):
-    message = update.effective_message
-    chat_title = message.chat.title
-    chat = update.effective_chat
-    no_users = False
-    msg = "The following users are approved.\n"
-    x = sql.list_approved(message.chat_id)
-    for i in x:
-        try:
-            member = chat.get_member(int(i.user_id))
-        except:
-            pass
-        msg += f"- `{i.user_id}`: {member.user['first_name']}\n"
-    if msg.endswith("approved.\n"):
-      message.reply_text(f"No users are approved in {chat_title}.")
-      return
+async def can_approve_users(message):
+    result = await telethn(
+        functions.channels.GetParticipantRequest(
+            channel=message.chat_id,
+            user_id=message.sender_id,
+        )
+    )
+    p = result.participant
+    return isinstance(p, types.ChannelParticipantCreator) or (isinstance(
+        p, types.ChannelParticipantAdmin) and p.admin_rights.add_admins)
+
+
+async def is_register_admin(chat, user):
+    if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
+
+        return isinstance(
+            (
+                await telethn(functions.channels.GetParticipantRequest(chat, user))
+            ).participant,
+            (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
+        )
+    if isinstance(chat, types.InputPeerChat):
+
+        ui = await telethn.get_peer_id(user)
+        ps = (
+            await telethn(functions.messages.GetFullChatRequest(chat.chat_id))
+        ).full_chat.participants.participants
+        return isinstance(
+            next((p for p in ps if p.user_id == ui), None),
+            (types.ChatParticipantAdmin, types.ChatParticipantCreator),
+        )
+    return None
+
+
+# ------ THANKS TO LONAMI ------#
+
+
+@register(pattern="^/approve(?: |$)(.*)")
+async def approve(event):
+    if event.fwd_from:
+        return
+    if DB_URI  is None:
+        return
+    chat_id = event.chat.id
+    sender = event.sender_id
+    reply_msg = await event.get_reply_message()
+    approved_userss = approved_users.find({})
+
+    if event.is_group:
+        if not await can_approve_users(message=event):
+            return
     else:
-      message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
+        return
 
-@user_admin
-@run_async
-def approval(update, context):
-	 message = update.effective_message
-	 chat = update.effective_chat
-	 args = context.args
-	 user_id = extract_user(message, args)
-	 member = chat.get_member(int(user_id))
-	 if not user_id:
-	     message.reply_text("I don't know who you're talking about, you're going to need to specify a user!")
-	     return ""
-	 if sql.is_approved(message.chat_id, user_id):
-	     message.reply_text(f"{member.user['first_name']} is an approved user. Locks, antiflood, and blocklists won't apply to them.")
-	 else:
-	     message.reply_text(f"{member.user['first_name']} is not an approved user. They are affected by normal commands.")
+    ik = event.pattern_match.group(1)
+    if ik.isdigit():
+        input = int(ik)
+    else:
+        input = ik.replace("@", "")
 
-@telethn.on(events.CallbackQuery)
-async def _(event):
-   rights = await is_administrator(event.query.user_id, event)
-   creator = await c(event)
-   if event.data == b'rmapp':
-       if not rights:
-             await event.answer("You need to be admin to do this.")
-             return
-       if creator != event.query.user_id and event.query.user_id not in SUDO_USERS:
-             await event.answer("Only owner of the chat can do this.")
-             return
-       users = []
-       x = sql.all_app(event.chat_id)
-       for i in x:
-          users.append(int(i.user_id))
-       for j in users:
-           sql.disapprove(event.chat_id, j)
-       await event.client.edit_message(event.chat_id, event.query.msg_id, f"Unapproved all users in chat. All users will now be affected by locks, blocklists, and antiflood.")
+    if not input:
+        iid = (
+            reply_msg.sender_id
+            if event.reply_to_msg_id
+            else await event.reply("Reply To Someone's Message Or Provide Some Input")
+        )
+    elif input:
+        cunt = input
+        dent = await telethn.get_entity(cunt)
+        iid = dent.id
+    elif input and event.reply_to_msg_id:
+        cunt = input
+        dent = await telethn.get_entity(cunt)
+        iid = dent.id
 
-   if event.data == b'can':
-        if not rights:
-             await event.answer("You need to be admin to do this.")
-             return
-        if creator != event.query.user_id and event.query.user_id not in SUDO_USERS:
-             await event.answer("Only owner of the chat can cancel this operation.")
-             return
-        await event.client.edit_message(event.chat_id, event.query.msg_id, f"Removing of all unapproved users has been cancelled.")
+    if await is_register_admin(event.input_chat, iid):
+        await event.reply("Why will I approve an admin ?")
+        return
 
-@telethn.on(events.NewMessage(pattern="^/unapproveall"))
-async def _(event):
-	 chat = await event.get_chat()
-	 creator = await c(event)
-	 if creator != event.from_id and event.from_id not in SUDO_USERS:
-	     await event.reply("Only the chat owner can unapprove all users at once.")
-	     return
-	 msg = f"Are you sure you would like to unapprove ALL users in {event.chat.title}? This action cannot be undone."
-	 await event.client.send_message(event.chat_id, msg, buttons=[[Button.inline('Unapprove all users', b'rmapp')], [Button.inline('Cancel', b'can')]], reply_to=event.id)
+    if iid == event.sender_id or iid == event.sender_id:
+        await event.reply("Why are you trying to approve yourself ?")
+        print("6")
+        return
+
+    if event.sender_id == 1298169248 or iid == 1298169248:
+        await event.reply("I am not gonna approve myself")
+        print("7")
+        return
+
+    chats = approved_users.find({})
+    for c in chats:
+        if event.chat_id == c["id"] and iid == c["user"]:
+            await event.reply("This User is Already Approved")
+            return
+
+    approved_users.insert_one({"id": event.chat_id, "user": iid})
+    await event.reply("Successfully Approved User!!")
 
 
-__help__  = """
-Sometimes, you might trust a user not to send unwanted content.
-Maybe not enough to make them admin, but you might be ok with locks, blacklists, and antiflood not applying to them.
+@register(pattern="^/disapprove(?: |$)(.*)")
+async def disapprove(event):
+    if event.fwd_from:
+        return
+    if DB_URI  is None:
+        return
+    chat_id = event.chat.id
+    sender = event.sender_id
+    reply_msg = await event.get_reply_message()
+    approved_userss = approved_users.find({})
 
-That's what approvals are for - approve of trustworthy users to allow them to send 
+    if event.is_group:
+        if not await can_approve_users(message=event):
+            return
+    else:
+        return
 
-*Admin commands:*
-- `/approval`*:* Check a user's approval status in this chat.
-- `/approve`*:* Approve of a user. Locks, blacklists, and antiflood won't apply to them anymore.
-- `/unapprove`*:* Unapprove of a user. They will now be subject to locks, blacklists, and antiflood again.
-- `/approved`*:* List all approved users.
-- `/unapproveall`*:* Unapprove *ALL* users in a chat. This cannot be undone.
+    ik = event.pattern_match.group(1)
+    if ik.isdigit():
+        input = int(ik)
+    else:
+        input = ik.replace("@", "")
+
+    if not input:
+        iid = (
+            reply_msg.sender_id
+            if event.reply_to_msg_id
+            else await event.reply("Reply To Someone's Message Or Provide Some Input")
+        )
+    elif input:
+        cunt = input
+        dent = await telethn.get_entity(cunt)
+        iid = dent.id
+    elif input and event.reply_to_msg_id:
+        cunt = input
+        dent = await telethn.get_entity(cunt)
+        iid = dent.id
+
+    if await is_register_admin(event.input_chat, iid):
+        await event.reply("Why will I disapprove an admin ?")
+        return
+
+    if iid == event.sender_id or iid == event.sender_id:
+        await event.reply("Why are you trying to disapprove yourself ?")
+        print("6")
+        return
+
+    if event.sender_id == 1298169248 or iid == 1298169248:
+        await event.reply("I am not gonna disapprove myself")
+        print("7")
+        return
+
+    chats = approved_users.find({})
+    for c in chats:
+        if event.chat_id == c["id"] and iid == c["user"]:
+            approved_users.delete_one({"id": event.chat_id, "user": iid})
+            await event.reply("Successfully Disapproved User")
+            return
+    await event.reply("This User isn't approved yet")
+
+
+@register(pattern="^/checkstatus(?: |$)(.*)")
+async def checkst(event):
+    if event.fwd_from:
+        return
+    if DB_URI  is None:
+        return
+    chat_id = event.chat.id
+    sender = event.sender_id
+    reply_msg = await event.get_reply_message()
+    approved_userss = approved_users.find({})
+
+    if event.is_group:
+        if not await can_approve_users(message=event):
+            return
+    else:
+        return
+
+    ik = event.pattern_match.group(1)
+    if ik.isdigit():
+        input = int(ik)
+    else:
+        input = ik.replace("@", "")
+
+    if not input:
+        iid = (
+            reply_msg.sender_id
+            if event.reply_to_msg_id
+            else await event.reply("Reply To Someone's Message Or Provide Some Input")
+        )
+    elif input:
+        cunt = input
+        dent = await telethn.get_entity(cunt)
+        iid = dent.id
+    elif input and event.reply_to_msg_id:
+        cunt = input
+        dent = await telethn.get_entity(cunt)
+        iid = dent.id
+
+    if await is_register_admin(event.input_chat, iid):
+        await event.reply("Why will check status of an admin ?")
+        return
+
+    if event.sender_id == 1298169248 or iid == 1298169248:
+        await event.reply("I am not gonna check my status")
+        print("7")
+        return
+
+    chats = approved_users.find({})
+    for c in chats:
+        if event.chat_id == c["id"] and iid == c["user"]:
+            await event.reply("This User is Approved")
+            return
+    await event.reply("This user isn't Approved")
+
+
+@register(pattern="^/listapproved$")
+async def apprlst(event):
+    print("😁")
+    if event.fwd_from:
+
+        return
+    if DB_URI  is None:
+
+        return
+    chat_id = event.chat.id
+    sender = event.sender_id
+    reply_msg = await event.get_reply_message()
+
+    if event.is_group:
+        if not await can_approve_users(message=event):
+            return
+    else:
+        return
+
+    autos = approved_users.find({})
+    pp = ""
+    for i in autos:
+        if event.chat_id == i["id"]:
+            try:
+                h = await telethn.get_entity(i["user"])
+                getmyass = ""
+                if not h.username:
+                    getmyass += f"- [{h.first_name}](tg://user?id={h.id})\n"
+                else:
+                    getmyass += "- @" + h.username + "\n"
+                pp += str(getmyass)
+            except ValueError:
+                pass
+    try:
+        await event.reply(pp)
+    except Exception:
+        await event.reply("No one is approved in this chat.")
+
+
+@register(pattern="^/disapproveall$")
+async def disapprlst(event):
+    # print("😁")
+    if event.fwd_from:
+        return
+    if DB_URI  is None:
+        return
+    chat_id = event.chat.id
+    sender = event.sender_id
+    reply_msg = await event.get_reply_message()
+
+    if event.is_group:
+        if not await can_approve_users(message=event):
+            return
+    else:
+        return
+    autos = approved_users.find({})
+    for i in autos:
+        if event.chat_id == i["id"]:
+            approved_users.delete_one({"id": event.chat_id})
+            await event.reply("Successfully disapproved everyone in the chat.")
+            return
+    await event.reply("No one is approved in this chat.")
+file_help = os.path.basename(__file__)
+file_help = file_help.replace(".py", "")
+file_helpo = file_help.replace("_", " ")
+
+__help__ = """
+ - /approve: Approves a user so that they can use all non-admin commands in group
+ - /disapprove: Disapproves a user so that they can't use non-admin commands in group
+ - /checkstatus: Check the approve status of an admin
+ - /listapproved: List all the Approved users in the chat
+ - /disapproveall: Disapproves all users who were approved in the chat
 """
-
-APPROVE = DisableAbleCommandHandler("approve", approve)
-DISAPPROVE = DisableAbleCommandHandler("unapprove", disapprove)
-LIST_APPROVED = DisableAbleCommandHandler("approved", approved)
-APPROVAL = DisableAbleCommandHandler("approval", approval)
-
-dispatcher.add_handler(APPROVE)
-dispatcher.add_handler(DISAPPROVE)
-dispatcher.add_handler(LIST_APPROVED)
-dispatcher.add_handler(APPROVAL)
-
-__mod_name__ = "Approvals"
-__command_list__ = ["approve", "unapprove", "approved", "approval"]
-__handlers__ = [APPROVE, DISAPPROVE, APPROVAL]
