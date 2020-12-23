@@ -132,14 +132,6 @@ def start(bot: Bot, update: Update, args: List[str]):
     else:
         update.effective_message.reply_text("Heya:), I am Angelina!\nPM me if you have any questions on how to use me!")
         
- def send_start(bot, update):
-    #Try to remove old message
-    try:
-        query = update.callback_query
-        query.message.delete()
-    except:
-        pass
-    text = PM_START_TEXT
 
 
 # for test purposes
@@ -385,7 +377,7 @@ def main():
     test_handler = CommandHandler("test", test)
     start_handler = CommandHandler("start", start, pass_args=True)
     
-    start_callback_handler = CallbackQueryHandler(send_start, pattern=r"bot_start")
+    start_callback_handler = CallbackQueryHandler(start, pattern=r"bot_start")
     dispatcher.add_handler(start_callback_handler)
 
     help_handler = CommandHandler("help", get_help)
