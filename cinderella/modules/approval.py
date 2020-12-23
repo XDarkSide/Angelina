@@ -169,4 +169,4 @@ dispatcher.add_handler(APPROVAL)
 
 __mod_name__ = "Approvals"
 __command_list__ = ["approve", "unapprove", "approved", "approval"]
-__handlers__ = [APPROVE, DISAPPROVE, ALL, APPROVAL]
+__handlers__ = [APPROVE, DISAPPROVE, APPROVAL]
