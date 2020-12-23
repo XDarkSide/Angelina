@@ -103,10 +103,7 @@ def status(bot: Bot, update: Update):
 	reply = str(stat)+ str(softw) + str(cpuu) + str(memm) + "\n"
 	bot.send_message(chat.id, reply, parse_mode=ParseMode.MARKDOWN)        
 
-__help__ = """
-- /system : To know System status
-- /speed or - /speedtest: To find Speed
-"""
+
 	
 SPEED_TEST_HANDLER = DisableAbleCommandHandler(["speedtest","speed"], speedtestxyz, filters=CustomFilters.sudo_filter)
 SPEED_TEST_CALLBACKHANDLER = CallbackQueryHandler(speedtestxyz_callback, pattern='speedtest_.*')
