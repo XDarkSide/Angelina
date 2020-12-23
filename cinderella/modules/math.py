@@ -83,7 +83,11 @@ def log(bot: Bot, update: Update, args):
     message.reply_text(math.log(int(args[0])))
 
 __help__ = """
-Solves complex math problems using https://newton.now.sh
+Sometimes you may get yourself troubled into complex maths problems, So at that time you can use this module
+
+Below commands can solve your complex maths problems very easily.
+
+*Commands*
  - /math: Simplify `/simplify 2^2+2(2)`
  - /factor: Factor `/factor x^2 + 2x`
  - /derive: Derive `/derive x^2+2x`
@@ -99,12 +103,13 @@ Solves complex math problems using https://newton.now.sh
  - /arctan: Inverse Tangent `/arctan 0`
  - /abs: Absolute Value `/abs -1`
  - /log: Logarithm `/log 2l8`
+ 
 __Keep in mind__: To find the tangent line of a function at a certain x value, send the request as c|f(x) where c is the given x value and f(x) is the function expression, the separator is a vertical bar '|'. See the table above for an example request.
 To find the area under a function, send the request as c:d|f(x) where c is the starting x value, d is the ending x value, and f(x) is the function under which you want the curve between the two x values.
 To compute fractions, enter expressions as numerator(over)denominator. For example, to process 2/4 you must send in your expression as 2(over)4. The result expression will be in standard math notation (1/2, 3/4).
 """
 
-__mod_name__ = "MATHS"
+__mod_name__ = "Maths"
 
 SIMPLIFY_HANDLER = DisableAbleCommandHandler("math", simplify, pass_args=True)
 FACTOR_HANDLER = DisableAbleCommandHandler("factor", factor, pass_args=True)
