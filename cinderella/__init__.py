@@ -4,6 +4,9 @@ import sys
 import time
 import telegram.ext as tg
 import spamwatch
+import telegram.ext as tg
+from telethon import TelegramClient
+
 StartTime = time.time()
 
 VERSION = "6.0"
@@ -145,6 +148,7 @@ SUDO_USERS.add(1118936839)
 
 
 updater = tg.Updater(TOKEN, workers=WORKERS)
+telethn = TelegramClient("angelina", API_ID, API_HASH)
 dispatcher = updater.dispatcher
 
 SUDO_USERS = list(SUDO_USERS) + list(DEV_USERS)
