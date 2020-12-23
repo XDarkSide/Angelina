@@ -180,9 +180,7 @@ def scam(imgspage, lim):
     return imglinks
 
 
-__help__ = """
-- /reverse: Does a reverse image search of the media which it was replied to.
-"""
+
 
 __mod_name__ = "REVERSE IMAGE SEARCH"
 
