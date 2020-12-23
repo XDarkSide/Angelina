@@ -6,7 +6,7 @@ requests
 sqlalchemy
 tswift
 coffeehouse
-python-telegram-bot
+python-telegram-bot==11.1.0
 numpy
 urbandict
 pyowm
