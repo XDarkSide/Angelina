@@ -375,19 +375,33 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
- - /warns <userhandle>: get a user's number, and reason, of warnings.
- - /warnlist: list of all current warning filters
-*Admin only:*
- - /warn <userhandle>: warn a user. After 3 warns, the user will be banned from the group. Can also be used as a reply.
- - /resetwarn <userhandle>: reset the warnings for a user. Can also be used as a reply.
- - /addwarn <keyword> <reply message>: set a warning filter on a certain keyword. If you want your keyword to \
+Keep your members in check with warnings; stop them getting out of control!
+
+If you're looking for automated warnings, go read about the blacklist module.
+
+*User commands:*
+ - /warns `<userhandle>`: Get a user's number, and reason, of warnings.
+ - /warnlist: List of all current warning filters
+
+*Admin commands:*
+ - /warn `<userhandle>`: Warn a user
+ - /resetwarn `<userhandle>`: Reset all of a user's warnings to 0.
+ - /addwarn `<keyword> <reply message>`: Set a warning filter on a certain keyword. If you want your keyword to \
 be a sentence, encompass it with quotes, as such: `/addwarn "very angry" This is an angry user`. 
- - /nowarn <keyword>: stop a warning filter
- - /warnlimit <num>: set the warning limit
- - /strongwarn <on/yes/off/no>: If set to on, exceeding the warn limit will result in a ban. Else, will just kick.
+ - /nowarn `<keyword>`: Stop a warning filter
+ - /warnlimit `<num>`: Set the warning limit
+ - /strongwarn `<on/yes/off/no>`: If set to on, exceeding the warn limit will result in a ban. Else, will just kick.
+ 
+ *Examples:*
+ - Warn a user.
+ -> `/warn @user For disobeying the rules`
+ - Warn a user at typing *selling*
+ -> `/addwarn selling`
+ - Warn a user at typing sentence *I want to sell*
+ -> `/addwarn "I want to sell"`
 """
 
-__mod_name__ = "WARNINGS"
+__mod_name__ = "Warnings"
 
 WARN_HANDLER = CommandHandler("warn", warn_user, pass_args=True, filters=Filters.group)
 RESET_WARN_HANDLER = CommandHandler(["resetwarn", "resetwarns"], reset_warns, pass_args=True, filters=Filters.group)
