@@ -1,4 +1,4 @@
-#Modificatins by Sur_vivor
+#Modificatins by anonyindian
 import html
 import json
 import os
@@ -74,16 +74,16 @@ def info(bot: Bot, update: Update, args: List[str]):
    
 
     if user.id == OWNER_ID:
-        text += "\n🚶🏻‍♂️Uff,This person is my Owner🤴\nI would never do anything against him!."
+        text += "\n🚶🏻‍♂️Sed, He is my Owner🤴\nI will ban you, If I came to know that you doing things against him.😒"
         
     elif user.id in DEV_USERS:
-        text += "\n🚴‍♂️Pling,This person is my dev🤷‍♂️\nI would never do anything against him!."
+        text += "\n🚴‍♂️Wew, My Developer🤷‍♂️\nI would never do anything against him!."
         
-    elif user.id == 1118936839:
-        text += "\n🚴‍♂️Pling,This person is my Creator/developer🤷‍♂️\nI would never do anything against him!."     
+    elif user.id == 920437078:
+        text += "\n🚴‍♂️Woah,This person is my mighty Creater😍♂️\nIf I came to know that you doing things against him.😒"     
         
     elif user.id in SUDO_USERS:
-        text += "\n🚴‍♂️Pling,This person is one of my sudo users! " \
+        text += "\n🚴‍♂️Sed, This person is my peru Sudo user" \
                     "Nearly as powerful as my owner🕊so watch it.."
         
     elif user.id in SUPPORT_USERS:
@@ -96,7 +96,7 @@ def info(bot: Bot, update: Update, args: List[str]):
         text += "\n🚴‍♂️Pling,This person has been whitelisted! " \
                         "That means I'm not allowed to ban/kick them."
     elif user.id == bot.id:     
-        text += "\n💃Lol🧞‍♂️It's Me😉"
+        text += "\n💃Lol🧞‍♂️It's Me, Your Loving One *Angelina*😉"
 
 
     text +="\n"
