@@ -1,5 +1,5 @@
 from cinderella.modules.disable import DisableAbleCommandHandler
-from cinderella import dispatcher, SUDO_USERS
+from cinderella import dispatcher, SUDO_USERS, telethn
 from cinderella.modules.helper_funcs.extraction import extract_user
 from telegram.ext import CallbackContext, run_async
 import cinderella.modules.sql.approve_sql as sql
@@ -104,8 +104,43 @@ def approval(update, context):
 	 else:
 	     message.reply_text(f"{member.user['first_name']} is not an approved user. They are affected by normal commands.")
 
+@telethn.on(events.CallbackQuery)
+async def _(event):
+   rights = await is_administrator(event.query.user_id, event)
+   creator = await c(event)
+   if event.data == b'rmapp':
+       if not rights:
+             await event.answer("You need to be admin to do this.")
+             return
+       if creator != event.query.user_id and event.query.user_id not in SUDO_USERS:
+             await event.answer("Only owner of the chat can do this.")
+             return
+       users = []
+       x = sql.all_app(event.chat_id)
+       for i in x:
+          users.append(int(i.user_id))
+       for j in users:
+           sql.disapprove(event.chat_id, j)
+       await event.client.edit_message(event.chat_id, event.query.msg_id, f"Unapproved all users in chat. All users will now be affected by locks, blocklists, and antiflood.")
 
+   if event.data == b'can':
+        if not rights:
+             await event.answer("You need to be admin to do this.")
+             return
+        if creator != event.query.user_id and event.query.user_id not in SUDO_USERS:
+             await event.answer("Only owner of the chat can cancel this operation.")
+             return
+        await event.client.edit_message(event.chat_id, event.query.msg_id, f"Removing of all unapproved users has been cancelled.")
 
+@telethn.on(events.NewMessage(pattern="^/unapproveall"))
+async def _(event):
+	 chat = await event.get_chat()
+	 creator = await c(event)
+	 if creator != event.from_id and event.from_id not in SUDO_USERS:
+	     await event.reply("Only the chat owner can unapprove all users at once.")
+	     return
+	 msg = f"Are you sure you would like to unapprove ALL users in {event.chat.title}? This action cannot be undone."
+	 await event.client.send_message(event.chat_id, msg, buttons=[[Button.inline('Unapprove all users', b'rmapp')], [Button.inline('Cancel', b'can')]], reply_to=event.id)
 
 
 __help__  = """
