@@ -80,10 +80,13 @@ def weather(bot, update, args):
 
 
 __help__ = """
- - /weather <city>: gets weather info in a particular place using openweathermap.org api
+A informative module to get you weather details of different places.
+
+*Command:*
+ - /weather `<city>`: Gets weather info of a particular place.
 """
 
-__mod_name__ = "WEATHER"
+__mod_name__ = "Weather"
 
 WEATHER_HANDLER = DisableAbleCommandHandler("weather", weather, pass_args=True)
 
