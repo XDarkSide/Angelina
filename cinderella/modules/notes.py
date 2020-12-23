@@ -233,22 +233,34 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
- - /get <notename>: get the note with this notename
- - #<notename>: same as /get
- - /notes or /saved: list all saved notes in this chat
+Save data for future users with notes!
 
-If you would like to retrieve the contents of a note without any formatting, use `/get <notename> noformat`. This can \
+Notes are great to save random tidbits of information; a phone number, a nice gif, a funny picture - anything!
+
+*User commands:*
+ - /get `<notename>`: Get the note with this notename
+ - #<notename>: Same as /get
+ - /notes or /saved: List all saved notes in this chat
+
+• If you would like to retrieve the contents of a note without any formatting, use `/get <notename> noformat`. This can \
 be useful when updating a current note.
 
-*Admin only:*
- - /save <notename> <notedata>: saves notedata as a note with name notename
-A button can be added to a note by using standard markdown link syntax - the link should just be prepended with a \
+*Admin commands:*
+ - /save `<notename> <notedata>`: Saves notedata as a note with name notename
+ - /save `<notename>`: Save the replied message as a note with name notename
+ - /clear `<notename>`: Clear note with this name
+ 
+• A button can be added to a note by using standard markdown link syntax - the link should just be prepended with a \
 `buttonurl:` section, as such: `[somelink](buttonurl:example.com)`. Check /markdownhelp for more info.
- - /save <notename>: save the replied message as a note with name notename
- - /clear <notename>: clear note with this name
+
+*Examples:*
+- Saving a note. Now, anyone using `#test` or `/get test` will see this message. To save an image, gif, sticker, or any other kind of data, simply reply to that message
+-> `/save test This is a fancy note!`
+- You can also link notes through notebuttons. To do this, simply use the notename as the URL:
+-> `/save note This is a note [With a button](buttonurl://#anothernote)`
 """
 
-__mod_name__ = "NOTES"
+__mod_name__ = "Notes"
 
 GET_HANDLER = CommandHandler("get", cmd_get, pass_args=True)
 HASH_GET_HANDLER = RegexHandler(r"^#[^\s]+", hash_get)
