@@ -24,6 +24,11 @@ SOURCE_STRINGS = (
     "Fuck Yourself Before Asking For Source"
   )
 
+ANONY_STRINGS = (
+    "Anony ko kyu tag kia madarchod😒",
+    "Don't dare to tag my owner."
+  )
+
 
 
 @run_async
@@ -43,7 +48,16 @@ def source(bot: Bot, update: Update):
       message.reply_to_message.reply_text(random.choice(SOURCE_STRINGS))
     else:
       message.reply_text(random.choice(SOURCE_STRINGS))
-
+    
+@run_async
+def anonyindian(bot: Bot, update: Update):
+    bot.sendChatAction(update.effective_chat.id, "typing") # Bot typing before send messages
+    message = update.effective_message
+    if message.reply_to_message:
+      message.reply_to_message.reply_text(random.choice(ANONY_STRINGS))
+    else:
+      message.reply_text(random.choice(ANONY_STRINGS))
+    
 __help__ = """
 This is a module for extra commands either funny or serious ones....
 
@@ -72,6 +86,8 @@ __mod_name__ = "Extras"
 
 ABUSE_HANDLER = DisableAbleCommandHandler("abuse", abuse)
 SOURCE_HANDLER = DisableAbleCommandHandler("source", source)
+OWNER_TAG_HANDLER = RegexHandler("(?i)@anonyindian(s)?", anonyindian)
 
 dispatcher.add_handler(ABUSE_HANDLER)
 dispatcher.add_handler(SOURCE_HANDLER)
+dispatcher.add_handler(OWNER_TAG_HANDLER, ANONY_STRINGS)
