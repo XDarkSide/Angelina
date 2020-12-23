@@ -418,6 +418,9 @@ This module allows you to do that easily, by exposing some common actions, so ev
  - /sban: Silently ban a user, and delete your message.
  - /tban: Temporarily ban a user.
  - /unban: Unban a user.
+ - /mute: Mute a user.
+ - /tmute: Temporarily mute a user.
+ - /unmute: Unmute a user.
  - /kick: Kick a user.
  
  *Examples:*
