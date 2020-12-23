@@ -14,6 +14,17 @@ ABUSE_STRINGS = (
     "andi bandi sandi...agar tune apna account delete na kia to teri maa randi..."
   )
 
+SOURCE_STRINGS = (
+    "Source ka kya karega madarchod😒",
+    "Ek dunga, Source ka naam bhi nhi lega fir😠",
+    "Hack Github and Make my Repo Public, If you want my source🤣",
+    "Lund lele source ki jagah🖕",
+    "💩Tatti Khaale, Aya Bada Source Maangne Wala",
+    "The Person who asks for My Source is a Gay😒😒😒",
+    "Fuck Yourself Before Asking For Source"
+  )
+
+
 
 @run_async
 def abuse(bot: Bot, update: Update):
@@ -23,6 +34,15 @@ def abuse(bot: Bot, update: Update):
       message.reply_to_message.reply_text(random.choice(ABUSE_STRINGS))
     else:
       message.reply_text(random.choice(ABUSE_STRINGS))
+    
+@run_async
+def source(bot: Bot, update: Update):
+    bot.sendChatAction(update.effective_chat.id, "typing") # Bot typing before send messages
+    message = update.effective_message
+    if message.reply_to_message:
+      message.reply_to_message.reply_text(random.choice(SOURCE_STRINGS))
+    else:
+      message.reply_text(random.choice(SOURCE_STRINGS))
 
 __help__ = """
 This is a module for extra commands either funny or serious ones....
@@ -51,7 +71,7 @@ This is a module for extra commands either funny or serious ones....
 __mod_name__ = "Extras"
 
 ABUSE_HANDLER = DisableAbleCommandHandler("abuse", abuse)
-
+SOURCE_HANDLER = DisableAbleCommandHandler("source", source)
 
 dispatcher.add_handler(ABUSE_HANDLER)
-
+dispatcher.add_handler(SOURCE_HANDLER)
