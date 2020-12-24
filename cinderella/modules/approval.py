@@ -32,7 +32,7 @@ def approve(bot: Bot, update: Update):
 	 message = update.effective_message
 	 chat_title = message.chat.title
 	 chat = update.effective_chat
-	 args = context.args
+	 
 	 user_id = extract_user(message, args)
 	 if not user_id:
 	     message.reply_text("I don't know who you're talking about, you're going to need to specify a user!")
