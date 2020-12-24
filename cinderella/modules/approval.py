@@ -162,7 +162,7 @@ That's what approvals are for - approve of trustworthy users to allow them to se
 
 APPROVE = DisableAbleCommandHandler("approve", approve, pass_args=True)
 DISAPPROVE = DisableAbleCommandHandler("unapprove", disapprove, pass_args=True)
-LIST_APPROVED = DisableAbleCommandHandler("approved", approved pass_args=True)
+LIST_APPROVED = DisableAbleCommandHandler("approved", approved, pass_args=True)
 APPROVAL = DisableAbleCommandHandler("approval", approval, pass_args=True)
 
 dispatcher.add_handler(APPROVE)
