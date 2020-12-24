@@ -28,7 +28,7 @@ async def c(event):
 
 @user_admin
 @run_async
-def approve(update: Update, bot: Bot):
+def approve(bot: Bot, update: Update):
 	 message = update.effective_message
 	 chat_title = message.chat.title
 	 chat = update.effective_chat
@@ -49,7 +49,7 @@ def approve(update: Update, bot: Bot):
      
 @user_admin
 @run_async
-def disapprove(update: Update, bot: Bot):
+def disapprove(bot: Bot, update: Update):
 	 message = update.effective_message
 	 chat_title = message.chat.title
 	 chat = update.effective_chat
@@ -70,7 +70,7 @@ def disapprove(update: Update, bot: Bot):
      
 @user_admin
 @run_async
-def approved(update: Update, bot: Bot):
+def approved(bot: Bot, update: Update):
     message = update.effective_message
     chat_title = message.chat.title
     chat = update.effective_chat
@@ -91,7 +91,7 @@ def approved(update: Update, bot: Bot):
 
 @user_admin
 @run_async
-def approval(update: Update, bot: Bot):
+def approval(bot: Bot, update: Update):
 	 message = update.effective_message
 	 chat = update.effective_chat
 	 args = context.args
