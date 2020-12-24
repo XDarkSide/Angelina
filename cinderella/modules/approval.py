@@ -8,6 +8,8 @@ from telegram import ParseMode
 from telegram import Update, Bot
 from telethon import events, Button
 from telethon.tl.types import ChannelParticipantsAdmins, ChannelParticipantCreator
+from typing import Optional, List
+
 
 async def is_administrator(user_id: int, message):
     admin = False
