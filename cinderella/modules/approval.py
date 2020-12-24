@@ -1,7 +1,7 @@
 from cinderella.modules.disable import DisableAbleCommandHandler
-from cinderella import dispatcher, DRAGONS, telethn
+from cinderella import dispatcher, SUDO_USERS, telethn
 from cinderella.modules.helper_funcs.extraction import extract_user
-from telegram.ext import CallbackContext, run_async
+from telegram.ext import run_async
 import cinderella.modules.sql.approve_sql as sql
 from cinderella.modules.helper_funcs.chat_status import (bot_admin, user_admin)
 from telegram import ParseMode
@@ -13,7 +13,7 @@ async def is_administrator(user_id: int, message):
     async for user in message.client.iter_participants(
         message.chat_id, filter=ChannelParticipantsAdmins
     ):
-        if user_id == user.id or user_id in DRAGONS:
+        if user_id == user.id or user_id in SUDO_USERS:
             admin = True
             break
     return admin
@@ -27,7 +27,7 @@ async def c(event):
 
 @user_admin
 @run_async
-def approve(update, context):
+def approve(update: Update, bot: Bot):
 	 message = update.effective_message
 	 chat_title = message.chat.title
 	 chat = update.effective_chat
@@ -48,7 +48,7 @@ def approve(update, context):
      
 @user_admin
 @run_async
-def disapprove(update, context):
+def disapprove(update: Update, bot: Bot):
 	 message = update.effective_message
 	 chat_title = message.chat.title
 	 chat = update.effective_chat
@@ -69,7 +69,7 @@ def disapprove(update, context):
      
 @user_admin
 @run_async
-def approved(update, context):
+def approved(update: Update, bot: Bot):
     message = update.effective_message
     chat_title = message.chat.title
     chat = update.effective_chat
@@ -90,7 +90,7 @@ def approved(update, context):
 
 @user_admin
 @run_async
-def approval(update, context):
+def approval(update: Update, bot: Bot):
 	 message = update.effective_message
 	 chat = update.effective_chat
 	 args = context.args
@@ -112,7 +112,7 @@ async def _(event):
        if not rights:
              await event.answer("You need to be admin to do this.")
              return
-       if creator != event.query.user_id and event.query.user_id not in DRAGONS:
+       if creator != event.query.user_id and event.query.user_id not in SUDO_USERS:
              await event.answer("Only owner of the chat can do this.")
              return
        users = []
@@ -127,7 +127,7 @@ async def _(event):
         if not rights:
              await event.answer("You need to be admin to do this.")
              return
-        if creator != event.query.user_id and event.query.user_id not in DRAGONS:
+        if creator != event.query.user_id and event.query.user_id not in SUDO_USERS:
              await event.answer("Only owner of the chat can cancel this operation.")
              return
         await event.client.edit_message(event.chat_id, event.query.msg_id, f"Removing of all unapproved users has been cancelled.")
@@ -136,7 +136,7 @@ async def _(event):
 async def _(event):
 	 chat = await event.get_chat()
 	 creator = await c(event)
-	 if creator != event.from_id and event.from_id not in DRAGONS:
+	 if creator != event.from_id and event.from_id not in SUDO_USERS:
 	     await event.reply("Only the chat owner can unapprove all users at once.")
 	     return
 	 msg = f"Are you sure you would like to unapprove ALL users in {event.chat.title}? This action cannot be undone."
@@ -169,4 +169,4 @@ dispatcher.add_handler(APPROVAL)
 
 __mod_name__ = "Approvals"
 __command_list__ = ["approve", "unapprove", "approved", "approval"]
-__handlers__ = [APPROVE, DISAPPROVE, ALL, APPROVAL]
+__handlers__ = [APPROVE, DISAPPROVE, APPROVAL]
