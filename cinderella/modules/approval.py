@@ -33,7 +33,7 @@ def approve(bot: Bot, update: Update):
 	 chat_title = message.chat.title
 	 chat = update.effective_chat
 	 
-	 user_id = extract_user(message, args)
+	 user_id = extract_user(message)
 	 if not user_id:
 	     message.reply_text("I don't know who you're talking about, you're going to need to specify a user!")
 	     return ""
@@ -53,8 +53,8 @@ def disapprove(bot: Bot, update: Update):
 	 message = update.effective_message
 	 chat_title = message.chat.title
 	 chat = update.effective_chat
-	 args = context.args
-	 user_id = extract_user(message, args)
+	 
+	 user_id = extract_user(message)
 	 if not user_id:
 	     message.reply_text("I don't know who you're talking about, you're going to need to specify a user!")
 	     return ""
@@ -94,8 +94,8 @@ def approved(bot: Bot, update: Update):
 def approval(bot: Bot, update: Update):
 	 message = update.effective_message
 	 chat = update.effective_chat
-	 args = context.args
-	 user_id = extract_user(message, args)
+	 
+	 user_id = extract_user(message)
 	 member = chat.get_member(int(user_id))
 	 if not user_id:
 	     message.reply_text("I don't know who you're talking about, you're going to need to specify a user!")
