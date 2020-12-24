@@ -5,7 +5,7 @@ from telegram.ext import run_async
 import cinderella.modules.sql.approve_sql as sql
 from cinderella.modules.helper_funcs.chat_status import (bot_admin, user_admin)
 from telegram import ParseMode
-from telegram import Update, Bot
+from telegram import Update, Bot, Message, Chat, User
 from telethon import events, Button
 from telethon.tl.types import ChannelParticipantsAdmins, ChannelParticipantCreator
 from typing import Optional, List
@@ -160,10 +160,10 @@ That's what approvals are for - approve of trustworthy users to allow them to se
 - `/unapproveall`*:* Unapprove *ALL* users in a chat. This cannot be undone.
 """
 
-APPROVE = DisableAbleCommandHandler("approve", approve)
-DISAPPROVE = DisableAbleCommandHandler("unapprove", disapprove)
-LIST_APPROVED = DisableAbleCommandHandler("approved", approved)
-APPROVAL = DisableAbleCommandHandler("approval", approval)
+APPROVE = DisableAbleCommandHandler("approve", approve, pass_args=True)
+DISAPPROVE = DisableAbleCommandHandler("unapprove", disapprove, pass_args=True)
+LIST_APPROVED = DisableAbleCommandHandler("approved", approved pass_args=True)
+APPROVAL = DisableAbleCommandHandler("approval", approval, pass_args=True)
 
 dispatcher.add_handler(APPROVE)
 dispatcher.add_handler(DISAPPROVE)
