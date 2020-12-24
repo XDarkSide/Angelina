@@ -5,7 +5,7 @@ from telegram.ext import run_async
 import cinderella.modules.sql.approve_sql as sql
 from cinderella.modules.helper_funcs.chat_status import (bot_admin, user_admin)
 from telegram import ParseMode
-from telegram import Update
+from telegram import Update, Bot
 from telethon import events, Button
 from telethon.tl.types import ChannelParticipantsAdmins, ChannelParticipantCreator
 
