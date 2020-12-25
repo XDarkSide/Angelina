@@ -80,6 +80,7 @@ This is a module for extra commands either funny or serious ones....
 - /reverse: Does a reverse image search of the media which it was replied to.
 - /react: Reacts with a random reaction.
 - /wiki `<query>`: Wiki your query.
+- /speak `<your text>`
 
 """
 
