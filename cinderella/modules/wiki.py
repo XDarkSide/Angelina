@@ -37,13 +37,7 @@ def wiki(bot: Bot, update: Update):
                     parse_mode=ParseMode.HTML)
         else:
             update.message.reply_text(result, parse_mode=ParseMode.HTML)
-__help__ = """
-A very special module which will allow you to search your queries over wikipedia.
 
-*Command:*
- - /wiki `<query>`: Wiki your query.
-
-"""
 
 __mod_name__ = "Wikipedia"
 
