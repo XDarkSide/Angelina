@@ -26,9 +26,7 @@ def add_chat(bot: Bot, update: Update):
     msg = update.effective_message
     user = update.effective_user
     is_chat = sql.is_chat(chat_id)    
-    if chat.type == "private":
-        msg.reply_text("You can't enable AI in PM.")
-        return
+    
     
     if not is_chat:
         ses = api_client.create_session()
