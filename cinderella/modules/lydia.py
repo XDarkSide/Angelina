@@ -37,15 +37,9 @@ def add_chat(bot: Bot, update: Update):
         expires = str(ses.expires)
         sql.set_ses(chat_id, ses_id, expires)
         msg.reply_text("AI CHAT successfully enabled for this chat!")
-        message = (
-            f"AI CHAT ENABLED\n"
-            
-            
-        )
-        return message
     else:
         msg.reply_text("AI CHAT is already enabled for this chat!")
-        return ""
+       
         
         
         
@@ -62,13 +56,8 @@ def remove_chat(bot: Bot, update: Update):
     else:
         sql.rem_chat(chat_id)
         msg.reply_text("AI CHAT disabled successfully!")
-        message = (
-            
-            f"AI CHAT DISABLED\n"
-            
-        )
-        return message
-        
+       
+   
         
 def check_message(bot: Bot, message):
     reply_msg = message.reply_to_message
