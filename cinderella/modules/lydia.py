@@ -38,7 +38,7 @@ def add_chat(bot: Bot, update: Update):
         sql.set_ses(chat_id, ses_id, expires)
         msg.reply_text("AI CHAT successfully enabled for this chat!")
         message = (
-            f"<b>{html.escape(chat.title)}:</b>\n"
+            f"<b>{html.escape(chat_title)}:</b>\n"
             f"#AI_ENABLED\n"
             f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
         )
@@ -63,7 +63,7 @@ def remove_chat(bot: Bot, update: Update):
         sql.rem_chat(chat_id)
         msg.reply_text("AI CHAT disabled successfully!")
         message = (
-            f"<b>{html.escape(chat.title)}:</b>\n"
+            f"<b>{html.escape(chat_title)}:</b>\n"
             f"#AI_DISABLED\n"
             f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
         )
