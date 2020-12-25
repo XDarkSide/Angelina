@@ -9,6 +9,7 @@ from telegram import Message, Chat, User, Update, Bot
 from telegram.ext import CommandHandler, MessageHandler, Filters, run_async
 
 from cinderella import dispatcher, LYDIA_API, OWNER_ID
+from cinderella.modules.helper_funcs.chat_status import user_admin
 import cinderella.modules.sql.chatbot_sql as sql
 from cinderella.modules.helper_funcs.filters import CustomFilters
 
@@ -19,7 +20,6 @@ api_client = LydiaAI(CoffeeHouseAPI)
 
 @run_async
 @user_admin
-@gloggable
 def add_chat(bot: Bot, update: Update):
     global api_client
     chat_id = update.effective_chat.id
@@ -51,7 +51,6 @@ def add_chat(bot: Bot, update: Update):
         
 @run_async
 @user_admin
-@gloggable
 def remove_chat(bot: Bot, update: Update):
     msg = update.effective_message
     user = update.effective_user
