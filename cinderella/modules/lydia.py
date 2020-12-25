@@ -1,5 +1,5 @@
 # AI module using Intellivoid's Coffeehouse API by @TheRealPhoenix
-
+import html
 from time import time, sleep
 from coffeehouse.lydia import LydiaAI
 from coffeehouse.api import API
