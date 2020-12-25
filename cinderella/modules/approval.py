@@ -144,11 +144,13 @@ APPROVE = DisableAbleCommandHandler("approve", approve, pass_args=True)
 DISAPPROVE = DisableAbleCommandHandler("unapprove", disapprove, pass_args=True)
 LIST_APPROVED = DisableAbleCommandHandler("approved", approved, pass_args=True)
 APPROVAL = DisableAbleCommandHandler("approval", approval, pass_args=True)
-
+UNAPPROVE_ALL_HANDLER = DisableAbleCommandHandler("unapproveall", unapproveall, filters=Filters.group)
+				
 dispatcher.add_handler(APPROVE)
 dispatcher.add_handler(DISAPPROVE)
 dispatcher.add_handler(LIST_APPROVED)
 dispatcher.add_handler(APPROVAL)
+dispatcher.add_handler(UNAPPROVE_ALL_HANDLER)
 
 __mod_name__ = "Approval"
 __command_list__ = ["approve", "unapprove", "approved", "approval"]
