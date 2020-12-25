@@ -18,24 +18,43 @@ api_client = LydiaAI(CoffeeHouseAPI)
 
 
 @run_async
+@user_admin
+@gloggable
 def add_chat(bot: Bot, update: Update):
     global api_client
     chat_id = update.effective_chat.id
     msg = update.effective_message
-    is_chat = sql.is_chat(chat_id)
+    user = update.effective_user
+    is_chat = sql.is_chat(chat_id)    
+    if chat.type == "private":
+        msg.reply_text("You can't enable AI in PM.")
+        return
+    
     if not is_chat:
         ses = api_client.create_session()
         ses_id = str(ses.id)
         expires = str(ses.expires)
         sql.set_ses(chat_id, ses_id, expires)
         msg.reply_text("AI CHAT successfully enabled for this chat!")
+        message = (
+            f"<b>{html.escape(chat.title)}:</b>\n"
+            f"#AI_ENABLED\n"
+            f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
+        )
+        return message
     else:
         msg.reply_text("AI CHAT is already enabled for this chat!")
+        return ""
+        
+        
         
         
 @run_async
+@user_admin
+@gloggable
 def remove_chat(bot: Bot, update: Update):
     msg = update.effective_message
+    user = update.effective_user
     chat_id = update.effective_chat.id
     is_chat = sql.is_chat(chat_id)
     if not is_chat:
@@ -43,6 +62,12 @@ def remove_chat(bot: Bot, update: Update):
     else:
         sql.rem_chat(chat_id)
         msg.reply_text("AI CHAT disabled successfully!")
+        message = (
+            f"<b>{html.escape(chat.title)}:</b>\n"
+            f"#AI_DISABLED\n"
+            f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
+        )
+        return message
         
         
 def check_message(bot: Bot, message):
@@ -85,6 +110,8 @@ def lydia(bot: Bot, update: Update):
             msg.reply_text(rep, timeout=60)
         except CFError as e:
             bot.send_message(OWNER_ID, f"lydia error: {e} occurred in {chat_id}!")
+            
+
                     
 
 
