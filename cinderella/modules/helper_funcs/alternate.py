@@ -22,9 +22,7 @@ def typing_action(func):
 
     @wraps(func)
     def command_func(bot: Bot, update: Update, *args, **kwargs):
-        context.bot.send_chat_action(
-            chat_id=update.effective_chat.id, action=ChatAction.TYPING
-        )
+        bot.sendChatAction(update.effective_chat.id, "typing") 
         return func(bot: Bot, update: Update, *args, **kwargs)
 
     return command_func
