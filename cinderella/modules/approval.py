@@ -1,7 +1,7 @@
 from cinderella.modules.disable import DisableAbleCommandHandler
 from cinderella import dispatcher, SUDO_USERS, telethn
 from cinderella.modules.helper_funcs.extraction import extract_user
-from telegram.ext import run_async, Filters
+from telegram.ext import run_async
 import cinderella.modules.sql.approve_sql as sql
 from cinderella.modules.helper_funcs.chat_status import (bot_admin, user_admin)
 from telegram import ParseMode
@@ -107,21 +107,6 @@ def approval(bot: Bot, update: Update, args: List[str]) -> str:
 	 else:
 	     message.reply_text(f"{member.user['first_name']} is not an approved user. They are affected by normal commands.")
 
-@run_async
-@bot_admin
-@user_admin
-def unapproveall(bot: Bot, update: Update, args: List[str]) -> str:
-    bot.sendChatAction(update.effective_chat.id, "typing") # Bot typing before send messages
-    chat = update.effective_chat 
-    user = update.effective_user 
-    message = update.effective_message
-    chat_id = str(chat.id)[1:] 
-    approve_list = list(REDIS.sunion(f'approve_list_{chat_id}'))
-    for target_user in approve_list:
-        REDIS.srem(f'approve_list_{chat_id}', target_user)
-    message.reply_text(
-        "Successully unapproved all users from {}.".format(chat.title)
-    )
 
 			
 				
@@ -132,24 +117,27 @@ Maybe not enough to make them admin, but you might be ok with locks, blacklists,
 That's what approvals are for - approve of trustworthy users to allow them to send 
 
 *Admin commands:*
-- `/approval`*:* Check a user's approval status in this chat.
-- `/approve`*:* Approve of a user. Locks, blacklists, and antiflood won't apply to them anymore.
-- `/unapprove`*:* Unapprove of a user. They will now be subject to locks, blacklists, and antiflood again.
-- `/approved`*:* List all approved users.
-- `/unapproveall`*:* Unapprove *ALL* users in a chat. This cannot be undone.
+- /approve: Approve of a user. Locks, blacklists, and antiflood won't apply to them anymore.
+- /unapprove: Unapprove of a user. They will now be subject to locks, blacklists, and antiflood again.
+
+*Examples:*
+- To approve a user 
+-> `/approve @user`
+- To unapprove a user
+-> `/unapprove @user`
 """
 
 APPROVE = DisableAbleCommandHandler("approve", approve, pass_args=True)
 DISAPPROVE = DisableAbleCommandHandler("unapprove", disapprove, pass_args=True)
 LIST_APPROVED = DisableAbleCommandHandler("approved", approved, pass_args=True)
 APPROVAL = DisableAbleCommandHandler("approval", approval, pass_args=True)
-UNAPPROVE_ALL_HANDLER = DisableAbleCommandHandler("unapproveall", unapproveall, filters=Filters.group)
+
 				
 dispatcher.add_handler(APPROVE)
 dispatcher.add_handler(DISAPPROVE)
 dispatcher.add_handler(LIST_APPROVED)
 dispatcher.add_handler(APPROVAL)
-dispatcher.add_handler(UNAPPROVE_ALL_HANDLER)
+
 
 __mod_name__ = "Approval"
 __command_list__ = ["approve", "unapprove", "approved", "approval"]
