@@ -4,7 +4,6 @@ from cinderella.modules.helper_funcs.extraction import extract_user
 from telegram.ext import run_async, Filters
 import cinderella.modules.sql.approve_sql as sql
 from cinderella.modules.helper_funcs.chat_status import (bot_admin, user_admin)
-from cinderella.modules.helper_funcs.alternate import typing_action
 from telegram import ParseMode
 from telegram import Update, Bot, Message, Chat, User
 from telethon import events, Button
@@ -111,8 +110,8 @@ def approval(bot: Bot, update: Update, args: List[str]) -> str:
 @run_async
 @bot_admin
 @user_admin
-@typing_action
 def unapproveall(bot: Bot, update: Update, args: List[str]) -> str:
+    bot.sendChatAction(update.effective_chat.id, "typing") # Bot typing before send messages
     chat = update.effective_chat 
     user = update.effective_user 
     message = update.effective_message
