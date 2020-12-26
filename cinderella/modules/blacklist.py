@@ -14,6 +14,8 @@ from cinderella.modules.disable import DisableAbleCommandHandler
 from cinderella.modules.helper_funcs.chat_status import user_admin, user_not_admin, connection_status
 from cinderella.modules.helper_funcs.extraction import extract_text
 from cinderella.modules.helper_funcs.misc import split_message
+from cinderella.modules.sql.approve_sql import is_approved
+
 
 BLACKLIST_GROUP = 11
 
@@ -131,10 +133,13 @@ def unblacklist(bot: Bot, update: Update):
 @connection_status
 @user_not_admin
 def del_blacklist(bot: Bot, update: Update):
-
+    user = user.effective_user
     chat = update.effective_chat
     message = update.effective_message
     to_match = extract_text(message)
+    
+    if is_approved(chat.id, user.id):
+	    return
 
     if not to_match:
         return
