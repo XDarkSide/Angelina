@@ -16,6 +16,7 @@ from cinderella.modules.helper_funcs.chat_status import can_delete, is_user_admi
 from cinderella.modules.helper_funcs.filters import CustomFilters
 from cinderella.modules.log_channel import loggable
 from cinderella.modules.sql import users_sql
+from cinderella.modules.sql.approve_sql import is_approved
 
 LOCK_TYPES = {
     'sticker': Filters.sticker,
@@ -213,9 +214,11 @@ def unlock(bot: Bot, update: Update, args: List[str]) -> str:
 @run_async
 @user_not_admin
 def del_lockables(bot: Bot, update: Update):
-
+    user = update.effective_user
     chat = update.effective_chat
     message = update.effective_message
+    if is_approved(chat.id, user.id):
+	    return
 
     for lockable, filter in LOCK_TYPES.items():
         if filter(message) and sql.is_locked(chat.id, lockable) and can_delete(chat, bot.id):
