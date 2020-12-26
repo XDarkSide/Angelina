@@ -41,5 +41,5 @@ __mod_name__ = "Text To Speech"
 AFK_REGEX_HANDLER = DisableAbleRegexHandler("(?i)speak", speak, friendly="speak")
 
 dispatcher.add_handler(CommandHandler('speak', speak, pass_args=True))
-dispatcher.add_handler(AFK_REGEX_HANDLER, AFK_GROUP)
+dispatcher.add_handler(AFK_REGEX_HANDLER)
 
