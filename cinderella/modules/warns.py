@@ -19,6 +19,9 @@ from cinderella.modules.helper_funcs.misc import split_message
 from cinderella.modules.helper_funcs.string_handling import split_quotes
 from cinderella.modules.log_channel import loggable
 from cinderella.modules.sql import warns_sql as sql
+from cinderella.modules.sql.approve_sql import is_approved
+
+
 
 WARN_HANDLER_GROUP = 9
 CURRENT_WARNING_FILTER_STRING = "<b>Current warning filters in this chat:</b>\n"
@@ -26,6 +29,9 @@ CURRENT_WARNING_FILTER_STRING = "<b>Current warning filters in this chat:</b>\n"
 
 # Not async
 def warn(user: User, chat: Chat, reason: str, message: Message, warner: User = None) -> str:
+     
+    if is_approved(chat.id, user.id):
+	    return
     
     if is_user_admin(chat, user.id):
         # message.reply_text("Damn admins, They are too far to be One Punched!")
