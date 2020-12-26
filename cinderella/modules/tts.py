@@ -14,7 +14,7 @@ from telegram.ext import CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_html
 from cinderella import dispatcher
 from cinderella.__main__ import STATS
-from cinderella.modules.disable import DisableAbleCommandHandler
+from cinderella.modules.disable import DisableAbleCommandHandler, DisableAbleRegexHandler
 from cinderella.modules.helper_funcs.extraction import extract_user
 
 def speak(bot: Bot, update: Update, args):
@@ -38,4 +38,8 @@ def speak(bot: Bot, update: Update, args):
 
 __mod_name__ = "Text To Speech"
 
+AFK_REGEX_HANDLER = DisableAbleRegexHandler("(?i)speak", speak, friendly="speak")
+
 dispatcher.add_handler(CommandHandler('speak', speak, pass_args=True))
+dispatcher.add_handler(AFK_REGEX_HANDLER, AFK_GROUP)
+
