@@ -134,8 +134,8 @@ def unblacklist(bot: Bot, update: Update):
 @user_not_admin
 def del_blacklist(bot: Bot, update: Update):
     chat = update.effective_chat
-    user = user.effective_user
     message = update.effective_message
+    user = user.effective_user
     to_match = extract_text(message)
     
     if is_approved(chat.id, user.id):
