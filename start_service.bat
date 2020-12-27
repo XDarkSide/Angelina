@@ -24,5 +24,5 @@ if '%errorlevel%' NEQ '0' (
     pushd "%CD%"
     CD /D "%~dp0"
 :--------------------------------------
-net stop CinderellaProBot
-net start CinderellaProBot
+net stop MissAngelina_Bot
+net start MissAngelina_Bot

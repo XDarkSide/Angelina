@@ -1,2 +1,2 @@
-worker: python3 -m cinderella
+worker: python3 -m Angelina
 ps:scale worker=1

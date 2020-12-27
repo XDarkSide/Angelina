@@ -53,12 +53,12 @@
       },
       "OWNER_NAME": {
          "description": "Your Name",
-         "value": "✰Sᴀͥʀᴀͣᴛͫʜ™️✰"
+         "value": "Anonymous Indian"
       },
       "DEV_USERS": {
          "description": "ID of users who are Dev (can use /py etc.)",
          "required": false,
-         "value": "1118936839"
+         "value": "920437078"
       },
       "CASH_API_KEY": {
          "description": "Required for currency converter",
@@ -98,12 +98,12 @@
       "SUDO_USERS": {
          "description": "A space separated list of user IDs who you want to assign as sudo users.",
          "required": false,
-         "value": "1118936839"
+         "value": "920437078"
       },
       "SUPPORT_USERS": {
          "description": "A space separated list of user IDs who you wanna assign as support users(gban perms only).",
          "required": false,
-         "value": "1118936839"
+         "value": "920437078"
       },
      
       "TOKEN": {
@@ -124,7 +124,7 @@
       "WHITELIST_USERS": {
          "description": "A space separated list of user IDs who you want to assign as whitelisted - can't be banned with your bot.",
          "required": false,
-         "value": "1118936839"
+         "value": "920437078"
       },
       "WALL_API":{
          "description": "Enter wall api",
@@ -142,11 +142,11 @@
       "weeb",
       "group",
       "manager",
-      "cinderella"
+      "angelina"
       
    ],
-   "name": "Cinderella",
-   "repository": "https://github.com/Sur-vivor/CiderellaProBot",
-   "success_url": "https://telegram.dog/CinderellaProBot",
+   "name": "Angelina",
+   "repository": "https://github.com/anonyindian/Angelina",
+   "success_url": "https://telegram.dog/MissAngelina_bot",
    "logo": "https://telegra.ph/file/511ad504656e712b88235.jpg"
 }
