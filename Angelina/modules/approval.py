@@ -110,7 +110,66 @@ def approval(bot: Bot, update: Update, args: List[str]) -> str:
 	     message.reply_text(f"{member.user['first_name']} is not an approved user. They are affected by normal commands.")
 
 
-			
+	
+@run_async
+def unapproveall(bot: Bot, update: Update)
+    chat = update.effective_chat
+    user = update.effective_user
+    member = chat.get_member(user.id)
+    if member.status != "creator" and user.id not in SUDO_USERS:
+        update.effective_message.reply_text(
+            "Only the chat owner can unapprove all users at once."
+        )
+    else:
+        buttons = InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        text="Unapprove all users", callback_data="unapproveall_user"
+                    )
+                ],
+                [
+                    InlineKeyboardButton(
+                        text="Cancel", callback_data="unapproveall_cancel"
+                    )
+                ],
+            ]
+        )
+        update.effective_message.reply_text(
+            f"Are you sure you would like to unapprove ALL users in {chat.title}? This action cannot be undone.",
+            reply_markup=buttons,
+            parse_mode=ParseMode.MARKDOWN,
+        )
+
+
+@run_async
+def unapproveall_btn(bot: Bot, update: Update)
+    query = update.callback_query
+    chat = update.effective_chat
+    message = update.effective_message
+    member = chat.get_member(query.from_user.id)
+    if query.data == "unapproveall_user":
+        if member.status == "creator" or query.from_user.id in SUDO_USERS:
+            users = []
+            approved_users = sql.list_approved(chat.id)
+            for i in approved_users:
+                users.append(int(i.user_id))
+            for user_id in users:
+                sql.disapprove(chat.id, user_id)
+
+        if member.status == "administrator":
+            query.answer("Only owner of the chat can do this.")
+
+        if member.status == "member":
+            query.answer("You need to be admin to do this.")
+    elif query.data == "unapproveall_cancel":
+        if member.status == "creator" or query.from_user.id in SUDO_USERS:
+            message.edit_text("Removing of all approved users has been cancelled.")
+            return ""
+        if member.status == "administrator":
+            query.answer("Only owner of the chat can do this.")
+        if member.status == "member":
+            query.answer("You need to be admin to do this.")		
 				
 __help__  = """
 Sometimes, you might trust a user not to send unwanted content.
@@ -137,12 +196,15 @@ APPROVE = DisableAbleCommandHandler("approve", approve, pass_args=True)
 DISAPPROVE = DisableAbleCommandHandler("unapprove", disapprove, pass_args=True)
 LIST_APPROVED = DisableAbleCommandHandler("approved", approved, pass_args=True)
 APPROVAL = DisableAbleCommandHandler("approval", approval, pass_args=True)
-
+UNAPPROVEALL = DisableAbleCommandHandler("unapproveall", unapproveall)
+UNAPPROVEALL_BTN = CallbackQueryHandler(unapproveall_btn, pattern=r"unapproveall_.*")
 				
 dispatcher.add_handler(APPROVE)
 dispatcher.add_handler(DISAPPROVE)
 dispatcher.add_handler(LIST_APPROVED)
 dispatcher.add_handler(APPROVAL)
+dispatcher.add_handler(UNAPPROVEALL)
+dispatcher.add_handler(UNAPPROVEALL_BTN)
 
 
 __mod_name__ = "Approval"
