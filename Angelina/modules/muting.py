@@ -9,7 +9,7 @@ from telegram.utils.helpers import mention_html
 
 from Angelina import dispatcher, LOGGER
 from Angelina.modules.helper_funcs.chat_status import (bot_admin, user_admin, is_user_admin, can_restrict,
-                                                     connection_status)
+                                                     connection_status, user_can_ban)
 from Angelina.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from Angelina.modules.helper_funcs.string_handling import extract_time
 from Angelina.modules.log_channel import loggable
@@ -48,6 +48,7 @@ def check_user(user_id: int, bot: Bot, chat: Chat) -> Optional[str]:
 @connection_status
 @bot_admin
 @user_admin
+@user_can_ban
 @loggable
 def mute(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat
@@ -88,6 +89,7 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
 @connection_status
 @bot_admin
 @user_admin
+@user_can_ban
 @loggable
 def unmute(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat
@@ -132,6 +134,7 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
 @bot_admin
 @can_restrict
 @user_admin
+@user_can_ban
 @loggable
 def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat
