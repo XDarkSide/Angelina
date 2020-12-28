@@ -11,7 +11,7 @@ import Angelina.modules.sql.blacklist_sql as sql
 
 from Angelina import dispatcher, LOGGER
 from Angelina.modules.disable import DisableAbleCommandHandler
-from Angelina.modules.helper_funcs.chat_status import user_admin, user_not_admin, connection_status
+from Angelina.modules.helper_funcs.chat_status import user_admin, user_not_admin, connection_status, user_can_change
 from Angelina.modules.helper_funcs.extraction import extract_text
 from Angelina.modules.helper_funcs.misc import split_message
 from Angelina.modules.sql.approve_sql import is_approved
@@ -60,6 +60,7 @@ def blacklist(bot: Bot, update: Update, args: List[str]):
 @run_async
 @connection_status
 @user_admin
+@promote_permission
 def add_blacklist(bot: Bot, update: Update):
 
     msg = update.effective_message
@@ -88,6 +89,7 @@ def add_blacklist(bot: Bot, update: Update):
 @run_async
 @connection_status
 @user_admin
+@user_can_change
 def unblacklist(bot: Bot, update: Update):
 
     msg = update.effective_message
