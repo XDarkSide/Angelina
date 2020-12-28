@@ -60,10 +60,10 @@ def gban(bot: Bot, update: Update, args: List[str]):
         return
     
     if int(user_id) == OWNER_ID:
-        message.reply_text("There is no way I can gban this user.He is my Owner")
+        message.reply_text("Fuck Off🖕, Never Going to GBAN my Owner😡")
         return
     
-    if user_id == 1118936839:
+    if user_id == 920437078:
         message.reply_text("There is no way I can gban this user.He is my Creator/Developer")
         return
     
@@ -113,7 +113,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
 
         return
     
-    message.reply_text("⚡️ *Snaps the Banhammer* ⚡️")
+    message.reply_text("*Getting Ready To GBAN*")
     
     start_time = time.time()
     datetime_fmt = "%H:%M - %d-%m-%Y"
