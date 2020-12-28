@@ -68,19 +68,19 @@ def gban(bot: Bot, update: Update, args: List[str]):
         return
     
     if int(user_id) in DEV_USERS:
-        message.reply_text("There is no way I can gban this user.")
+        message.reply_text("With His Little Hand Someone Trying To Ban a Apologypse.")
         return
 
     if int(user_id) in SUDO_USERS:
-        message.reply_text("I spy, with my little eye... a sudo user war! Why are you guys turning on each other?")
+        message.reply_text("Yay There is Nothing I Can Do Because This User is Scorpion And I Scare With Scorpions😫")
         return
 
     if int(user_id) in SUPPORT_USERS:
-        message.reply_text("OOOH someone's trying to gban a support user! *grabs popcorn*")
+        message.reply_text("Wew You Are Trying To Ban A Mortal So Sed:/")
         return
     
     if int(user_id) in WHITELIST_USERS:
-        message.reply_text("I can't ban my master's close frd.")
+        message.reply_text("I Can't Ban a Knight.")
         return
 
     if user_id == bot.id:
@@ -130,7 +130,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
                  "\n#GBANNED" \
                  "\n<b>Originated from:</b> {}" \
                  "\n<b>Status:</b> <code>Enforcing</code>" \
-                 "\n<b>Sudo Admin:</b> {}" \
+                 "\n<b>Scorpion User:</b> {}" \
                  "\n<b>User:</b> {}" \
                  "\n<b>ID:</b> <code>{}</code>" \
                  "\n<b>Event Stamp:</b> {}" \
@@ -244,7 +244,7 @@ def ungban(bot: Bot, update: Update, args: List[str]):
     log_message = (
         f"#UNGBANNED\n"
         f"<b>Originated from:</b> {chat_origin}\n"
-        f"<b>Sudo Admin:</b> {mention_html(user.id, user.first_name)}\n"
+        f"<b>Scorpion User:</b> {mention_html(user.id, user.first_name)}\n"
         f"<b>Unbanned User:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
         f"<b>Unbanned User ID:</b> {user_chat.id}\n"
         f"<b>Event Stamp:</b> {current_time}")
