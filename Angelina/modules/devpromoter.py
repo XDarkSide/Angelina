@@ -369,16 +369,16 @@ def devlist(bot: Bot, update: Update):
 
 
 
-SUDO_HANDLER = CommandHandler(("addsudo"), addsudo, pass_args=True)
-SUPPORT_HANDLER = CommandHandler(("addsupport"), addsupport, pass_args=True)
-WHITELIST_HANDLER = CommandHandler(("addwhitelist"), addwhitelist, pass_args=True)
-UNSUDO_HANDLER = CommandHandler(("removesudo"), removesudo, pass_args=True)
-UNSUPPORT_HANDLER = CommandHandler(("removesupport"), removesupport, pass_args=True)
-UNWHITELIST_HANDLER = CommandHandler(("removewhitelist"), removewhitelist, pass_args=True)
+SUDO_HANDLER = CommandHandler(("addscorpion"), addsudo, pass_args=True)
+SUPPORT_HANDLER = CommandHandler(("addmortal"), addsupport, pass_args=True)
+WHITELIST_HANDLER = CommandHandler(("addknight"), addwhitelist, pass_args=True)
+UNSUDO_HANDLER = CommandHandler(("rmscorpion"), removesudo, pass_args=True)
+UNSUPPORT_HANDLER = CommandHandler(("rmmortal"), removesupport, pass_args=True)
+UNWHITELIST_HANDLER = CommandHandler(("rmknight"), removewhitelist, pass_args=True)
 
-WHITELISTLIST_HANDLER = CommandHandler(["whitelistlist"], whitelistlist)
-SUPPORTLIST_HANDLER = CommandHandler(["supportlist"], supportlist)
-SUDOLIST_HANDLER = CommandHandler(["sudolist"], sudolist)
+WHITELISTLIST_HANDLER = CommandHandler(["knights"], whitelistlist)
+SUPPORTLIST_HANDLER = CommandHandler(["mortals"], supportlist)
+SUDOLIST_HANDLER = CommandHandler(["scorpions"], sudolist)
 DEVLIST_HANDLER = CommandHandler(["devlist"], devlist)
 
 dispatcher.add_handler(SUDO_HANDLER)
