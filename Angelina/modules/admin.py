@@ -18,7 +18,7 @@ from Angelina import dispatcher, WHITELIST_USERS, SUPPORT_USERS, SUDO_USERS, DEV
 from Angelina.__main__ import IMPORTED, HELPABLE, MIGRATEABLE, STATS, USER_INFO, DATA_IMPORT, DATA_EXPORT, CHAT_SETTINGS, USER_SETTINGS 
 from Angelina.modules.disable import DisableAbleCommandHandler
 from Angelina.modules.log_channel import loggable, gloggable
-from Angelina.modules.helper_funcs.chat_status import bot_admin, can_promote, user_admin, can_pin, sudo_plus, dev_plus, connection_status
+from Angelina.modules.helper_funcs.chat_status import bot_admin, can_promote, user_admin, can_pin, sudo_plus, dev_plus, connection_status, promote_permission, user_can_change
 from Angelina.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 
 
@@ -198,12 +198,13 @@ def listmodules(bot: Bot, update: Update):
     module_list = "Following modules are loaded : \n\n" + ''.join(module_list)
     message.reply_text(module_list, parse_mode=ParseMode.HTML)
 
-
+#From Now Bot Will Check Admin Permission
 @run_async
 @connection_status
 @bot_admin
 @can_promote
 @user_admin
+@promote_permission
 @loggable
 def promote(bot: Bot, update: Update, args: List[str]) -> str:
     
@@ -269,6 +270,7 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
 @bot_admin
 @can_promote
 @user_admin
+@promote_permission
 @loggable
 def demote(bot: Bot, update: Update, args: List[str]) -> str:
 
@@ -332,6 +334,7 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
 @bot_admin
 @can_promote
 @user_admin
+@promote_permission
 def set_title(bot: Bot, update: Update, args: List[str]):
 
     chat = update.effective_chat
@@ -483,6 +486,7 @@ def adminlist(bot: Bot, update: Update):
 @run_async
 @bot_admin
 @user_admin
+@promote_permission
 def setchatpic(bot: Bot, update: Update):
     chat = update.effective_chat
     msg = update.effective_message
@@ -521,6 +525,7 @@ def setchatpic(bot: Bot, update: Update):
 @run_async
 @bot_admin
 @user_admin
+@promote_permission
 def rmchatpic(bot: Bot, update: Update):
     chat = update.effective_chat
     msg = update.effective_message
