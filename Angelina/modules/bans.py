@@ -9,16 +9,17 @@ from telegram.utils.helpers import mention_html
 from Angelina import dispatcher, BAN_STICKER, KICK_STICKER, LOGGER, SUDO_USERS
 from Angelina.modules.disable import DisableAbleCommandHandler
 from Angelina.modules.helper_funcs.chat_status import bot_admin, user_admin, is_user_ban_protected, can_restrict, \
-    is_user_admin, is_user_in_chat
+    is_user_admin, is_user_in_chat, user_can_ban
 from Angelina.modules.helper_funcs.extraction import extract_user_and_text
 from Angelina.modules.helper_funcs.string_handling import extract_time
 from Angelina.modules.log_channel import loggable, gloggable
 
-
+#Now Bot Will Check Admin Permission
 @run_async
 @bot_admin
 @can_restrict
 @user_admin
+@user_can_ban
 @loggable
 def ban(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
@@ -91,6 +92,7 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
 @bot_admin
 @can_restrict
 @user_admin
+@user_can_ban
 @loggable
 def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
@@ -174,6 +176,7 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
 @bot_admin
 @can_restrict
 @user_admin
+@user_can_ban
 @loggable
 def kick(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
@@ -246,6 +249,7 @@ def kickme(bot: Bot, update: Update):
 @bot_admin
 @can_restrict
 @user_admin
+@user_can_ban
 @loggable
 def sban(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
@@ -323,6 +327,7 @@ def banme(bot: Bot, update: Update):
 @bot_admin
 @can_restrict
 @user_admin
+@user_can_ban
 @loggable
 def unban(bot: Bot, update: Update, args: List[str]) -> str:
     message = update.effective_message  # type: Optional[Message]
