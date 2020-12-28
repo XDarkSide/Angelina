@@ -45,10 +45,13 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
         message.reply_text("I really wish I could ban admins...")
         return ""
     
-    if user_id == 1118936839:
-        message.reply_text("There is no way I can Ban this user.He is my Creator/Developer")
+    if user_id == 920437078:
+        message.reply_text("You Cannot Ban The Power Of Thunder")
         return ""
-    
+    if int(user_id) in DEV_USERS:
+        message.reply_text("Someone trying to ban a Apologypse with his little hands So Sad :( ")
+        return
+
     if user_id == bot.id:
         message.reply_text("I'm not gonna ban myself..fuck off!")
         return ""
