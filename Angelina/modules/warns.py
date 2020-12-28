@@ -12,7 +12,7 @@ from telegram.utils.helpers import mention_html
 from Angelina import dispatcher, BAN_STICKER
 from Angelina.modules.disable import DisableAbleCommandHandler
 from Angelina.modules.helper_funcs.chat_status import (is_user_admin, bot_admin, user_admin_no_reply, user_admin,
-                                                     can_restrict)
+                                                     can_restrict, user_can_ban)
 from Angelina.modules.helper_funcs.extraction import extract_text, extract_user_and_text, extract_user
 from Angelina.modules.helper_funcs.filters import CustomFilters
 from Angelina.modules.helper_funcs.misc import split_message
@@ -122,6 +122,7 @@ def button(bot: Bot, update: Update) -> str:
 @run_async
 @user_admin
 @can_restrict
+@user_can_ban
 @loggable
 def warn_user(bot: Bot, update: Update, args: List[str]) -> str:
     message: Optional[Message] = update.effective_message
