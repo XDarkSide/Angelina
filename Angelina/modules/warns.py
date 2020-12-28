@@ -144,6 +144,7 @@ def warn_user(bot: Bot, update: Update, args: List[str]) -> str:
 @run_async
 @user_admin
 @bot_admin
+@user_can_ban
 @loggable
 def reset_warns(bot: Bot, update: Update, args: List[str]) -> str:
     message: Optional[Message] = update.effective_message
