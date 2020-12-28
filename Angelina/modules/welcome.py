@@ -139,24 +139,24 @@ def new_member(bot: Bot, update: Update):
         for new_mem in new_members:
             # Give the owner a special welcome
             if new_mem.id == OWNER_ID:
-                update.effective_message.reply_text("Oh🤴Genos,My Owner has just joined your group.")
+                update.effective_message.reply_text("The Power Of **Thunder** is Arrived")
                 continue
             
             # Welcome Devs
             elif new_mem.id in DEV_USERS:
-                update.effective_message.reply_text("Whoa! A member of the Heroes Association just joined!")
+                update.effective_message.reply_text("Beyond His Limits a **Apologypse** just Arrived!")
                 
             # Welcome Sudos
             elif new_mem.id in SUDO_USERS:
-                update.effective_message.reply_text("Huh! A Sudo User just joined! Stay Alert!")
+                update.effective_message.reply_text("The Egyptian King a **Scorpion** Just Arrived.")
 
             # Welcome Support
             elif new_mem.id in SUPPORT_USERS:
-                update.effective_message.reply_text("Huh! Someone with a Support User just joined!")
+                update.effective_message.reply_text("With Great Power Comes Great Abilities a **Mortal** Just Arrived!")
 
             # Welcome Whitelisted
             elif new_mem.id in WHITELIST_USERS:
-                update.effective_message.reply_text("Oof! A Whitelist User just joined!")
+                update.effective_message.reply_text("Knighthood lies above eternity **Knight** User just Arrived!")
                
 
             # Make bot greet admins
@@ -246,7 +246,7 @@ def left_member(bot: Bot, update: Update):
            
             # Give the owner a special goodbye
             if left_mem.id == OWNER_ID:
-                update.effective_message.reply_text("Oi! Genos! My Owner left..")
+                update.effective_message.reply_text("The Power Of Thunder Left the Ground..")
                 return
        
             # if media goodbye, use appropriate function for it
