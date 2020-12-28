@@ -287,6 +287,57 @@ def can_restrict(func):
 
     return restrict_rights
 
+def user_can_ban(func):	
+
+    @wraps(func)	
+    def user_is_banhammer(bot: Bot, update: Update, *args, **kwargs):	                         	
+        	
+        user = update.effective_user.id	
+        member = update.effective_chat.get_member(user)	
+
+        if not (member.can_restrict_members or	
+                member.status == "creator") and not user in DEV_USERS:	
+            update.effective_message.reply_text(	
+                "You are missing the following rights to use this command:CanBanUsers")	
+            return ""	
+
+        return func(bot, update, *args, **kwargs)	
+
+    return user_is_banhammer	
+
+def user_can_change(func):	
+
+    @wraps(func)	
+    def info_changer(bot: Bot, update: Update, *args, **kwargs):	
+        user = update.effective_user.id	
+        member = update.effective_chat.get_member(user)	
+
+        if not (member.can_change_info or	
+                member.status == "creator") and not user in DEV_USERS:	
+            update.effective_message.reply_text(	
+                "You are missing the following rights to use this command:CanChangeInfo.")	
+            return ""	
+
+        return func(bot, update, *args, **kwargs)	
+
+    return info_changer
+
+def promote_permission(func):	
+
+    @wraps(func)	
+    def permoter(bot: Bot, update: Update, *args, **kwargs):		
+        user = update.effective_user.id	
+        member = update.effective_chat.get_member(user)	
+
+        if not (member.can_promote_members or	
+                member.status == "creator") and not user in DEV_USERS:	
+            update.effective_message.reply_text(	
+                "You are missing the following rights to use this command:CanPromoteUsers.")	
+            return ""	
+
+        return func(bot, update, *args, **kwargs)	
+
+    return permoter
 
 def connection_status(func):
     @wraps(func)
