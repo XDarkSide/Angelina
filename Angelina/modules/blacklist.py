@@ -60,7 +60,7 @@ def blacklist(bot: Bot, update: Update, args: List[str]):
 @run_async
 @connection_status
 @user_admin
-@promote_permission
+@user_can_change
 def add_blacklist(bot: Bot, update: Update):
 
     msg = update.effective_message
