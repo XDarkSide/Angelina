@@ -7,7 +7,7 @@ from telegram.ext import Filters, MessageHandler, CommandHandler, run_async
 from telegram.utils.helpers import mention_html
 
 from Angelina import dispatcher
-from Angelina.modules.helper_funcs.chat_status import is_user_admin, user_admin, can_restrict, can_delete
+from Angelina.modules.helper_funcs.chat_status import is_user_admin, user_admin, can_restrict, can_delete, user_can_change
 from Angelina.modules.log_channel import loggable
 from Angelina.modules.sql import antiflood_sql as sql
 from Angelina.modules.sql.approve_sql import is_approved
@@ -67,6 +67,7 @@ def check_flood(bot: Bot, update: Update) -> str:
 @run_async
 @user_admin
 @can_restrict
+@user_can_change
 @loggable
 def set_flood(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
@@ -128,6 +129,7 @@ def flood(bot: Bot, update: Update):
 
 @run_async
 @user_admin
+@user_can_change
 @loggable
 def set_flood_strength(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat  # type: Optional[Chat]
