@@ -77,23 +77,20 @@ def info(bot: Bot, update: Update, args: List[str]):
         text += "\n🚶🏻‍♂️Sed, He is my Owner🤴\nI will ban you, If I came to know that you doing things against him.😒"
         
     elif user.id in DEV_USERS:
-        text += "\n🚴‍♂️Wew, My Developer🤷‍♂️\nI would never do anything against him!."
-        
-    elif user.id == 920437078:
-        text += "\n🚴‍♂️Woah,This person is my mighty Creater😍♂️\nIf I came to know that you doing things against him.😒"     
+        text += "\n🚴‍♂️With His Limitless Power This User **Apologypse**!."
         
     elif user.id in SUDO_USERS:
-        text += "\n🚴‍♂️Sed, This person is my peru Sudo user" \
-                    "Nearly as powerful as my owner🕊so watch it.."
+        text += "\nWith His Limited Power This User Is A **Scorpion**" \
+                    "Not Powerful as my Apologypse But Still watch it.."
         
     elif user.id in SUPPORT_USERS:
-        text += "\n🚴‍♂️Pling,This person is one of my support users! " \
-                        "Not quite a sudo user, but can still gban you off the map."
+        text += "\n🚴‍♂️With His Single Power This User **Mortal**! " \
+                        "Not quite a Scorpion user, but can still gban you off the map."
         
   
        
     elif user.id in WHITELIST_USERS:
-        text += "\n🚴‍♂️Pling,This person has been whitelisted! " \
+        text += "\nWith His Ability This User Knight! " \
                         "That means I'm not allowed to ban/kick them."
     elif user.id == bot.id:     
         text += "\n💃Lol🧞‍♂️It's Me, Your Loving One *Angelina*😉"
