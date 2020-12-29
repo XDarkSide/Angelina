@@ -183,6 +183,7 @@ That's what approvals are for - approve of trustworthy users to allow them to se
 
 APPROVE = DisableAbleCommandHandler("approve", approve, pass_args=True)
 DISAPPROVE = DisableAbleCommandHandler("unapprove", disapprove, pass_args=True)
+DISAPPROVE2 = DisableAbleCommandHandler("disapprove", disapprove, pass_args=True)
 LIST_APPROVED = DisableAbleCommandHandler("approved", approved, pass_args=True)
 APPROVAL = DisableAbleCommandHandler("approval", approval, pass_args=True)
 UNAPPROVEALL = DisableAbleCommandHandler("unapproveall", unapproveall)
@@ -190,6 +191,7 @@ UNAPPROVEALL_BTN = CallbackQueryHandler(unapproveall_btn, pattern=r"unapproveall
 				
 dispatcher.add_handler(APPROVE)
 dispatcher.add_handler(DISAPPROVE)
+dispatcher.add_handler(DISAPPROVE2)
 dispatcher.add_handler(LIST_APPROVED)
 dispatcher.add_handler(APPROVAL)
 dispatcher.add_handler(UNAPPROVEALL)
