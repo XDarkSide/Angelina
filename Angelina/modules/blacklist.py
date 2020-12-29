@@ -14,7 +14,7 @@ from Angelina.modules.disable import DisableAbleCommandHandler
 from Angelina.modules.helper_funcs.chat_status import user_admin, user_not_admin, connection_status, user_can_change
 from Angelina.modules.helper_funcs.extraction import extract_text
 from Angelina.modules.helper_funcs.misc import split_message
-from Angelina.modules.sql.approve_sql import is_approved
+
 
 
 BLACKLIST_GROUP = 11
@@ -137,13 +137,9 @@ def unblacklist(bot: Bot, update: Update):
 def del_blacklist(bot: Bot, update: Update):
     chat = update.effective_chat
     message = update.effective_message
-    user = user.effective_user
     to_match = extract_text(message)
     if not to_match:
         return
-
-    if is_approved(chat.id, user.id):
-	    return
 
    
     chat_filters = sql.get_chat_blacklist(chat.id)
