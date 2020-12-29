@@ -311,7 +311,7 @@ def removewhitelist(bot: Bot, update: Update, args: List[str]) -> str:
 @run_async
 @whitelist_plus
 def whitelistlist(bot: Bot, update: Update):
-    reply = "<b>Knight Users:</b>\n"
+    reply = "<b>Knights:</b>\n"
     for each_user in WHITELIST_USERS:
         user_id = int(each_user)
         try:
@@ -326,7 +326,7 @@ def whitelistlist(bot: Bot, update: Update):
 @run_async
 @whitelist_plus
 def supportlist(bot: Bot, update: Update):
-    reply = "<b>Mortal Lists:</b>\n"
+    reply = "<b>Mortals:</b>\n"
     for each_user in SUPPORT_USERS:
         user_id = int(each_user)
         try:
@@ -341,7 +341,7 @@ def supportlist(bot: Bot, update: Update):
 @whitelist_plus
 def sudolist(bot: Bot, update: Update):
     true_sudo = list(set(SUDO_USERS) - set(DEV_USERS))
-    reply = "<b>Scorpion Lists:</b>\n"
+    reply = "<b>Scorpions:</b>\n"
     for each_user in true_sudo:
         user_id = int(each_user)
         try:
@@ -356,7 +356,7 @@ def sudolist(bot: Bot, update: Update):
 @whitelist_plus
 def devlist(bot: Bot, update: Update):
     true_dev = list(set(DEV_USERS) - {OWNER_ID})
-    reply = "<b>Apologypse Users:</b>\n"
+    reply = "<b>Apologypses:</b>\n"
     for each_user in true_dev:
         user_id = int(each_user)
         try:
