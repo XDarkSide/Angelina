@@ -96,6 +96,13 @@ def unapproveall(bot: Bot, update: Update):
     chat = update.effective_chat
     user = update.effective_user
     member = chat.get_member(user.id)
+
+
+    if chat.type != "private":
+        update.effective_message.reply_text("Delete your federation in my PM, not in the group.")
+        return
+
+
     if member.status != "creator" and user.id not in SUDO_USERS:
         update.effective_message.reply_text(
             "Only the chat owner can unapprove all users at once."
