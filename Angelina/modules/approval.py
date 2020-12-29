@@ -1,32 +1,13 @@
 from Angelina.modules.disable import DisableAbleCommandHandler
-from Angelina import dispatcher, SUDO_USERS, telethn
+from Angelina import dispatcher, SUDO_USERS
 from Angelina.modules.helper_funcs.extraction import extract_user
 from telegram.ext import run_async
 import Angelina.modules.sql.approve_sql as sql
 from Angelina.modules.helper_funcs.chat_status import (bot_admin, user_admin, promote_permission)
 from telegram import ParseMode
 from telegram import Update, Bot, Message, Chat, User
-from telethon import events, Button
-from telethon.tl.types import ChannelParticipantsAdmins, ChannelParticipantCreator
 from typing import Optional, List
 
-
-async def is_administrator(user_id: int, message):
-    admin = False
-    async for user in message.client.iter_participants(
-        message.chat_id, filter=ChannelParticipantsAdmins
-    ):
-        if user_id == user.id or user_id in SUDO_USERS:
-            admin = True
-            break
-    return admin
-
-async def c(event):
-   msg = 0
-   async for x in event.client.iter_participants(event.chat_id, filter=ChannelParticipantsAdmins):
-    if isinstance(x.participant, ChannelParticipantCreator):
-       msg += x.id
-   return msg
 
 @user_admin
 @promote_permission
@@ -109,46 +90,9 @@ def approval(bot: Bot, update: Update, args: List[str]) -> str:
 	 else:
 	     message.reply_text(f"{member.user['first_name']} is not an approved user. They are affected by normal commands.")
 
-@telethn.on(events.CallbackQuery)
-async def _(event):
-   rights = await is_administrator(event.query.user_id, event)
-   creator = await c(event)
-   if event.data == b'rmapp':
-       if not rights:
-             await event.answer("You need to be admin to do this.")
-             return
-       if creator != event.query.user_id and event.query.user_id not in SUDO_USERS:
-             await event.answer("Only owner of the chat can do this.")
-             return
-       users = []
-       x = sql.all_app(event.chat_id)
-       for i in x:
-          users.append(int(i.user_id))
-       for j in users:
-           sql.disapprove(event.chat_id, j)
-       await event.client.edit_message(event.chat_id, event.query.msg_id, f"Unapproved all users in chat. All users will now be affected by locks, blocklists, and antiflood.")
-
-   if event.data == b'can':
-        if not rights:
-             await event.answer("You need to be admin to do this.")
-             return
-        if creator != event.query.user_id and event.query.user_id not in SUDO_USERS:
-             await event.answer("Only owner of the chat can cancel this operation.")
-             return
-        await event.client.edit_message(event.chat_id, event.query.msg_id, f"Removing of all unapproved users has been cancelled.")
-
-@telethn.on(events.NewMessage(pattern="^/unapproveall"))
-async def _(event):
-	 chat = await event.get_chat()
-	 creator = await c(event)
-	 if creator != event.from_id and event.from_id not in SUDO_USERS:
-	     await event.reply("Only the chat owner can unapprove all users at once.")
-	     return
-	 msg = f"Are you sure you would like to unapprove ALL users in {event.chat.title}? This action cannot be undone."
-	 await event.client.send_message(event.chat_id, msg, buttons=[[Button.inline('Unapprove all users', b'rmapp')], [Button.inline('Cancel', b'can')]], reply_to=event.id)
 
 @run_async
-def unapproveall(update: Update, context: CallbackContext):
+def unapproveall(bot: Bot, update: Update):
     chat = update.effective_chat
     user = update.effective_user
     member = chat.get_member(user.id)
@@ -192,7 +136,8 @@ def unapproveall_btn(update: Update, context: CallbackContext):
                 users.append(int(i.user_id))
             for user_id in users:
                 sql.disapprove(chat.id, user_id)
-
+            message.edit_text("Unapproved all users in chat. All users will now be affected by locks, blocklists, and antiflood.")
+            return ""
         if member.status == "administrator":
             query.answer("Only owner of the chat can do this.")
 
