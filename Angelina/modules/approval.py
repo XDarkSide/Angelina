@@ -123,7 +123,7 @@ def unapproveall(bot: Bot, update: Update):
 
 
 @run_async
-def unapproveall_btn(update: Update, context: CallbackContext):
+def unapproveall_btn(bot: Bot, update: Update):
     query = update.callback_query
     chat = update.effective_chat
     message = update.effective_message
