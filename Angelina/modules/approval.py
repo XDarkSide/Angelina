@@ -17,7 +17,7 @@ def approve(bot: Bot, update: Update, args: List[str]) -> str:
 	 chat_title = message.chat.title
 	 chat = update.effective_chat
 	 if chat.type == 'private':
-		send_message(update.effective_message, "Don't use this command in my PM, It must be used in a specific group!")
+		message.reply_text("Don't use this command in my PM, It must be used in a specific group!")
 		return
 	
 	 user_id = extract_user(message, args)
