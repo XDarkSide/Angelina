@@ -77,14 +77,14 @@ def info(bot: Bot, update: Update, args: List[str]):
         text += "\n🚶🏻‍♂️Sed, He is my Owner🤴\nI will ban you, If I came to know that you doing things against him.😒"
         
     elif user.id in DEV_USERS:
-        text += "\n🚴‍♂️With His Limitless Power This User **Apologypse**!."
+        text += "\n🚴‍♂️With His Limitless Power This User is a *Apologypse*!."
         
     elif user.id in SUDO_USERS:
-        text += "\nWith His Limited Power This User Is A **Scorpion**" \
-                    "Not Powerful as my Apologypse But Still watch it.."
+        text += "\nWith His Limited Power This User is a *Scorpion*" \
+                    "Not Powerful as Apologypse But Still watch it.."
         
     elif user.id in SUPPORT_USERS:
-        text += "\n🚴‍♂️With His Single Power This User **Mortal**! " \
+        text += "\n🚴‍♂️With His Single Power This User is a *Mortal*! " \
                         "Not quite a Scorpion user, but can still gban you off the map."
         
   
