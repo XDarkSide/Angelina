@@ -109,68 +109,45 @@ def approval(bot: Bot, update: Update, args: List[str]) -> str:
 	 else:
 	     message.reply_text(f"{member.user['first_name']} is not an approved user. They are affected by normal commands.")
 
+@telethn.on(events.CallbackQuery)
+async def _(event):
+   rights = await is_administrator(event.query.user_id, event)
+   creator = await c(event)
+   if event.data == b'rmapp':
+       if not rights:
+             await event.answer("You need to be admin to do this.")
+             return
+       if creator != event.query.user_id and event.query.user_id not in SUDO_USERS:
+             await event.answer("Only owner of the chat can do this.")
+             return
+       users = []
+       x = sql.all_app(event.chat_id)
+       for i in x:
+          users.append(int(i.user_id))
+       for j in users:
+           sql.disapprove(event.chat_id, j)
+       await event.client.edit_message(event.chat_id, event.query.msg_id, f"Unapproved all users in chat. All users will now be affected by locks, blocklists, and antiflood.")
 
-	
-@run_async
-def unapproveall(bot: Bot, update: Update)
-    chat = update.effective_chat
-    user = update.effective_user
-    member = chat.get_member(user.id)
-    if member.status != "creator" and user.id not in SUDO_USERS:
-        update.effective_message.reply_text(
-            "Only the chat owner can unapprove all users at once."
-        )
-    else:
-        buttons = InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(
-                        text="Unapprove all users", callback_data="unapproveall_user"
-                    )
-                ],
-                [
-                    InlineKeyboardButton(
-                        text="Cancel", callback_data="unapproveall_cancel"
-                    )
-                ],
-            ]
-        )
-        update.effective_message.reply_text(
-            f"Are you sure you would like to unapprove ALL users in {chat.title}? This action cannot be undone.",
-            reply_markup=buttons,
-            parse_mode=ParseMode.MARKDOWN,
-        )
+   if event.data == b'can':
+        if not rights:
+             await event.answer("You need to be admin to do this.")
+             return
+        if creator != event.query.user_id and event.query.user_id not in SUDO_USERS:
+             await event.answer("Only owner of the chat can cancel this operation.")
+             return
+        await event.client.edit_message(event.chat_id, event.query.msg_id, f"Removing of all unapproved users has been cancelled.")
 
-
-@run_async
-def unapproveall_btn(bot: Bot, update: Update)
-    query = update.callback_query
-    chat = update.effective_chat
-    message = update.effective_message
-    member = chat.get_member(query.from_user.id)
-    if query.data == "unapproveall_user":
-        if member.status == "creator" or query.from_user.id in SUDO_USERS:
-            users = []
-            approved_users = sql.list_approved(chat.id)
-            for i in approved_users:
-                users.append(int(i.user_id))
-            for user_id in users:
-                sql.disapprove(chat.id, user_id)
-
-        if member.status == "administrator":
-            query.answer("Only owner of the chat can do this.")
-
-        if member.status == "member":
-            query.answer("You need to be admin to do this.")
-    elif query.data == "unapproveall_cancel":
-        if member.status == "creator" or query.from_user.id in SUDO_USERS:
-            message.edit_text("Removing of all approved users has been cancelled.")
-            return ""
-        if member.status == "administrator":
-            query.answer("Only owner of the chat can do this.")
-        if member.status == "member":
-            query.answer("You need to be admin to do this.")		
+@telethn.on(events.NewMessage(pattern="^/unapproveall"))
+async def _(event):
+	 chat = await event.get_chat()
+	 creator = await c(event)
+	 if creator != event.from_id and event.from_id not in SUDO_USERS:
+	     await event.reply("Only the chat owner can unapprove all users at once.")
+	     return
+	 msg = f"Are you sure you would like to unapprove ALL users in {event.chat.title}? This action cannot be undone."
+	 await event.client.send_message(event.chat_id, msg, buttons=[[Button.inline('Unapprove all users', b'rmapp')], [Button.inline('Cancel', b'can')]], reply_to=event.id)
 				
+
 __help__  = """
 Sometimes, you might trust a user not to send unwanted content.
 Maybe not enough to make them admin, but you might be ok with locks, blacklists, and antiflood not applying to them.
@@ -196,17 +173,13 @@ APPROVE = DisableAbleCommandHandler("approve", approve, pass_args=True)
 DISAPPROVE = DisableAbleCommandHandler("unapprove", disapprove, pass_args=True)
 LIST_APPROVED = DisableAbleCommandHandler("approved", approved, pass_args=True)
 APPROVAL = DisableAbleCommandHandler("approval", approval, pass_args=True)
-UNAPPROVEALL = DisableAbleCommandHandler("unapproveall", unapproveall)
-UNAPPROVEALL_BTN = CallbackQueryHandler(unapproveall_btn, pattern=r"unapproveall_.*")
 				
 dispatcher.add_handler(APPROVE)
 dispatcher.add_handler(DISAPPROVE)
 dispatcher.add_handler(LIST_APPROVED)
 dispatcher.add_handler(APPROVAL)
-dispatcher.add_handler(UNAPPROVEALL)
-dispatcher.add_handler(UNAPPROVEALL_BTN)
 
 
 __mod_name__ = "Approval"
 __command_list__ = ["approve", "unapprove", "approved", "approval"]
-__handlers__ = [APPROVE, DISAPPROVE, APPROVAL]
+__handlers__ = [APPROVE, DISAPPROVE,LIST_APPROVED, APPROVAL]
