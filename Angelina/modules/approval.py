@@ -98,8 +98,8 @@ def unapproveall(bot: Bot, update: Update):
     member = chat.get_member(user.id)
 
 
-    if chat.type != "private":
-        update.effective_message.reply_text("Delete your federation in my PM, not in the group.")
+    if chat.type == "private":
+        update.effective_message.reply_text("This command is not specified to be used in my PM.")
         return
 
 
