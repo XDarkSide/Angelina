@@ -172,7 +172,7 @@ def join_fed(bot: Bot, update: Update, args: List[str]):
 	user = update.effective_user  # type: Optional[User]
 
 	if chat.type == 'private':
-		send_message(update.effective_message, "This command is specific to the group, not to the PM!")
+		send_message(update.effective_message, "Don't use this command in my PM, It must be used in a specific group!")
 		return
 
 	message = update.effective_message
@@ -219,7 +219,7 @@ def leave_fed(bot: Bot, update: Update, args: List[str]):
 	user = update.effective_user  # type: Optional[User]
 	
 	if chat.type == 'private':
-		send_message(update.effective_message, "This command is specific to the group, not to the PM! ")
+		send_message(update.effective_message, "Don't use this command in my PM, It must be used in a specific group!")
 		return
 
 	fed_id = sql.get_fed_id(chat.id)
