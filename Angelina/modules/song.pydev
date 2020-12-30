@@ -7,7 +7,7 @@ from pyrogram.types import InlineKeyboardButton
 from youtubesearchpython import VideosSearch
 from Angelina.utils import ignore_blacklisted_users, get_arg
 from Angelina import app, LOGGER
-from Angelina.sql.chat_sql import add_chat_to_db
+from Angelina.modules.sql.chat_sql import add_chat_to_db
 
 
 def yt_search(song):
