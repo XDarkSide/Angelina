@@ -22,6 +22,7 @@ Hey there! My name is Angelina - I'm here to help you manage your groups! Hit /h
 
 My future updates will be put into This Channel - @AngelinaSupport .
 
+I am made by Team BG.
 """
 
 HELP_STRINGS = """
