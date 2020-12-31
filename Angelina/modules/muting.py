@@ -100,44 +100,43 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
 @connection_status
 @bot_admin
 @user_admin
-@user_can_ban
 @loggable
 def unmute(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat
     chat_name = chat.title or chat.first or chat.username
     user = update.effective_user
     message = update.effective_message
-    if query.data == "unmuteangel":
-     user_id = extract_user(message, args)
-      if not user_id:
-           message.reply_text("You'll need to either give me a username to unmute, or reply to someone to be unmuted.")
-          return ""
 
-      member = chat.get_member(int(user_id))
-  
-      if member.status != 'kicked' and member.status != 'left':
-          if (member.can_send_messages
-                  and member.can_send_media_messages
-                  and member.can_send_other_messages
-                  and member.can_add_web_page_previews):
-              message.reply_text("This user already has the right to speak.")
-          else:
-              bot.restrict_chat_member(chat.id, int(user_id),
-                                       can_send_messages=True,
-                                       can_send_media_messages=True,
-                                       can_send_other_messages=True,
-                                       can_add_web_page_previews=True)
-              bot.sendMessage(chat.id, f"Yep, <b>{html.escape(member.user.first_name)}</b> can start talking again in " + f"<b>{chat_name}</b>",
-                              parse_mode=ParseMode.HTML)
-              return (f"<b>{html.escape(chat.title)}:</b>\n"
-                      f"#UNMUTE\n"
-                      f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
-                      f"<b>User:</b> {mention_html(member.user.id, member.user.first_name)}")
-      else:
-          message.reply_text("This user isn't even in the chat, unmuting them won't make them talk more than they "
-                            "already do!")
+    user_id = extract_user(message, args)
+    if not user_id:
+        message.reply_text("You'll need to either give me a username to unmute, or reply to someone to be unmuted.")
+        return ""
 
-      return ""
+    member = chat.get_member(int(user_id))
+
+    if member.status != 'kicked' and member.status != 'left':
+        if (member.can_send_messages
+                and member.can_send_media_messages
+                and member.can_send_other_messages
+                and member.can_add_web_page_previews):
+            message.reply_text("This user already has the right to speak.")
+        else:
+            bot.restrict_chat_member(chat.id, int(user_id),
+                                     can_send_messages=True,
+                                     can_send_media_messages=True,
+                                     can_send_other_messages=True,
+                                     can_add_web_page_previews=True)
+            bot.sendMessage(chat.id, f"Yep, <b>{html.escape(member.user.first_name)}</b> can start talking again in " + f"<b>{chat_name}</b>",
+                            parse_mode=ParseMode.HTML)
+            return (f"<b>{html.escape(chat.title)}:</b>\n"
+                    f"#UNMUTE\n"
+                    f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
+                    f"<b>User:</b> {mention_html(member.user.id, member.user.first_name)}")
+    else:
+        message.reply_text("This user isn't even in the chat, unmuting them won't make them talk more than they "
+                           "already do!")
+
+    return ""
 
 
 @run_async
