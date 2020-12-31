@@ -2,7 +2,7 @@ import html
 
 from typing import Optional, List
 
-from telegram import Bot, Chat, Update, ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
+from telegram import Bot, Chat, Update, ParseMode
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async
 from telegram.utils.helpers import mention_html
@@ -75,16 +75,7 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
 
     if member.can_send_messages is None or member.can_send_messages:
         bot.restrict_chat_member(chat.id, user_id, can_send_messages=False)
-        buttons = InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(
-                        text="Unmute"
-                    )
-                ],
-            ]
-        )
-        update.effective_message.reply_text(chat.id, f"<b>{html.escape(member.user.first_name)}</b> is muted in " + f"<b>{chat_name}</b>",
+        bot.sendMessage(chat.id, f"<b>{html.escape(member.user.first_name)}</b> is muted in " + f"<b>{chat_name}</b>",
                         parse_mode=ParseMode.HTML)
         return log
 
