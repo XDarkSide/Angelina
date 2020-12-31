@@ -2,7 +2,7 @@ import html
 
 from typing import Optional, List
 
-from telegram import Bot, Chat, Update, ParseMode
+from telegram import Bot, Chat, Update, ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async
 from telegram.utils.helpers import mention_html
