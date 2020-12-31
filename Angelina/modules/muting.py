@@ -75,7 +75,16 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
 
     if member.can_send_messages is None or member.can_send_messages:
         bot.restrict_chat_member(chat.id, user_id, can_send_messages=False)
-        bot.sendMessage(chat.id, f"<b>{html.escape(member.user.first_name)}</b> is muted in " + f"<b>{chat_name}</b>",
+        buttons = InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        text="Unmute", callback_data="unmuteangel"
+                    )
+                ],
+            ]
+        )
+        update.effective_message.reply_text(chat.id, f"<b>{html.escape(member.user.first_name)}</b> is muted in " + f"<b>{chat_name}</b>",
                         parse_mode=ParseMode.HTML)
         return log
 
@@ -83,6 +92,8 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
         message.reply_text("This user is already muted!")
 
     return ""
+ 
+        
 
 
 @run_async
@@ -96,8 +107,9 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
     chat_name = chat.title or chat.first or chat.username
     user = update.effective_user
     message = update.effective_message
-
+    
     user_id = extract_user(message, args)
+    if query.data == "unmuteangel":
     if not user_id:
         message.reply_text("You'll need to either give me a username to unmute, or reply to someone to be unmuted.")
         return ""
