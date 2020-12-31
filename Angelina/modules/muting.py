@@ -79,7 +79,7 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
             [
                 [
                     InlineKeyboardButton(
-                        text="Unmute", callback_data="unmuteangel"
+                        text="Unmute"
                     )
                 ],
             ]
