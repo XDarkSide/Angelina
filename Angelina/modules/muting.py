@@ -114,8 +114,8 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
         return ""
 
     member = chat.get_member(int(user_id))
-    if query.data == "unmuteangel":
-    if member.status != 'kicked' and member.status != 'left':
+   if query.data == "unmuteangel":
+     if member.status != 'kicked' and member.status != 'left':
         if (member.can_send_messages
                 and member.can_send_media_messages
                 and member.can_send_other_messages
