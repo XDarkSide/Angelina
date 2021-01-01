@@ -49,16 +49,16 @@ def addsudo(bot: Bot, update: Update, args: List[str]) -> str:
         data = json.load(infile)
 
     if user_id in SUDO_USERS:
-        message.reply_text("This member is already my SUDO.")
+        message.reply_text("This member is already my Scorpion.")
         return ""
 
     if user_id in SUPPORT_USERS:
-        rt += "This user is already a SUPPORT USER."
+        rt += "This user is already a Mortal."
         data['supports'].remove(user_id)
         SUPPORT_USERS.remove(user_id)
 
     if user_id in WHITELIST_USERS:
-        rt += "This user is already a WHITELIST USER."
+        rt += "This user is already a Knight."
         data['whitelists'].remove(user_id)
         WHITELIST_USERS.remove(user_id)
 
@@ -71,7 +71,7 @@ def addsudo(bot: Bot, update: Update, args: List[str]) -> str:
     update.effective_message.reply_text(
         rt + "\nSuccessfully added this user {} to Sudo!".format(user_member.first_name))
 
-    log_message = (f"#SUDO\n"
+    log_message = (f"#Scorpion\n"
                    f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
                    f"<b>User:</b> {mention_html(user_member.id, user_member.first_name)}")
 
@@ -102,16 +102,16 @@ def addsupport(bot: Bot, update: Update, args: List[str]) -> str:
         data = json.load(infile)
 
     if user_id in SUDO_USERS:
-        rt += "Demoting status of this SUDO to SUPPORT"
+        rt += "Demoting status of this Scorpion to Mortal"
         data['sudos'].remove(user_id)
         SUDO_USERS.remove(user_id)
 
     if user_id in SUPPORT_USERS:
-        message.reply_text("This user is already a SUDO.")
+        message.reply_text("This user is already a Scorpion.")
         return ""
 
     if user_id in WHITELIST_USERS:
-        rt += "Promoting Disaster level from WHITELIST USER to SUPPORT USER"
+        rt += "Promoting Disaster level from Knight to Mortal"
         data['whitelists'].remove(user_id)
         WHITELIST_USERS.remove(user_id)
 
@@ -121,9 +121,9 @@ def addsupport(bot: Bot, update: Update, args: List[str]) -> str:
     with open(ELEVATED_USERS_FILE, 'w') as outfile:
         json.dump(data, outfile, indent=4)
 
-    update.effective_message.reply_text(rt + f"\n{user_member.first_name} was added as a Support User!")
+    update.effective_message.reply_text(rt + f"\n{user_member.first_name} was added as a Mortal!")
 
-    log_message = (f"#SUPPORT\n"
+    log_message = (f"#Mortal\n"
                    f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
                    f"<b>User:</b> {mention_html(user_member.id, user_member.first_name)}")
 
@@ -154,17 +154,17 @@ def addwhitelist(bot: Bot, update: Update, args: List[str]) -> str:
         data = json.load(infile)
 
     if user_id in SUDO_USERS:
-        rt += "This member is a SUDO, Demoting to SUDO."
+        rt += "This member is a Scorpion, Demoting to Mortal."
         data['sudos'].remove(user_id)
         SUDO_USERS.remove(user_id)
 
     if user_id in SUPPORT_USERS:
-        rt += "This user is already a SUPPORT, Demoting to SUPPORT"
+        rt += "This user is already a Mortal, Demoting to Knight"
         data['supports'].remove(user_id)
         SUPPORT_USERS.remove(user_id)
 
     if user_id in WHITELIST_USERS:
-        message.reply_text("This user is already a WHITELIST USER.")
+        message.reply_text("This user is already a Knight.")
         return ""
 
     data['whitelists'].append(user_id)
@@ -174,7 +174,7 @@ def addwhitelist(bot: Bot, update: Update, args: List[str]) -> str:
         json.dump(data, outfile, indent=4)
 
     update.effective_message.reply_text(
-        rt + f"\nSuccessfully promoted {user_member.first_name} to a Whitelist User!")
+        rt + f"\nSuccessfully promoted {user_member.first_name} to a Knight!")
 
     log_message = (f"#WHITELIST\n"
                    f"<b>Admin:</b> {mention_html(user.id, user.first_name)} \n"
