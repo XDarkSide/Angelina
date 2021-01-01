@@ -29,6 +29,12 @@ ANONY_STRINGS = (
     "Don't dare to tag my owner."
   )
 
+geyban_STRINGS = (
+    "I can't ban this gey, as he wants his ass to be fucked by someone muscled like you!",
+    "Banning This Gay Untill he gib his gand in your ib!"
+    "This Gey Iz Bery Rondi"
+  )
+
 
 
 @run_async
@@ -57,7 +63,16 @@ def anonyindian(bot: Bot, update: Update):
       message.reply_to_message.reply_text(random.choice(ANONY_STRINGS))
     else:
       message.reply_text(random.choice(ANONY_STRINGS))
-    
+
+@run_async
+def gayban(bot: Bot, update: Update):
+    bot.sendChatAction(update.effective_chat.id, "typing") # Bot typing before send messages
+    message = update.effective_message
+    if message.reply_to_message:
+      message.reply_to_message.reply_text(random.choice(geyban_STRINGS))
+    else:
+      message.reply_text(random.choice(geyban_STRINGS))
+
 __help__ = """
 This is a module for extra commands either funny or serious ones....
 
@@ -101,7 +116,10 @@ __mod_name__ = "Extras"
 ABUSE_HANDLER = DisableAbleCommandHandler("abuse", abuse)
 SOURCE_HANDLER = DisableAbleCommandHandler("source", source)
 OWNER_TAG_HANDLER = RegexHandler("(?i)@anonyindian(s)?", anonyindian)
+GAYBAN_HANDLER = DisableAbleCommandHandler("geyban", geyban)
+GAYBAN_HANDLER = DisableAbleCommandHandler("gayban", geyban)
 
 dispatcher.add_handler(ABUSE_HANDLER)
 dispatcher.add_handler(SOURCE_HANDLER)
 dispatcher.add_handler(OWNER_TAG_HANDLER)
+dispatcher.add_handler(GAYBAN_HANDLER)
