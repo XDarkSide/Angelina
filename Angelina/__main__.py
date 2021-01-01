@@ -32,7 +32,7 @@ Helpful commands:
 - /start: Starts me! You've probably already used this.
 - /help: Sends this message; I'll tell you more about myself!
 
-If you have any bugs or questions on how to use me, have a look at @AngelinaSupport.
+If you have any bugs or questions on how to use me, have a look at @RoseSupportChannel.
  All commands can be used with the following: / !
 
 """.format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll of the following commands  / or ! can  be used...\n")
