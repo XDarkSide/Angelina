@@ -62,26 +62,38 @@ __help__ = """
 This is a module for extra commands either funny or serious ones....
 
 *Commands:*
-- /abuse : To Abuse Someone.
-- /runs: reply a random string from an array of replies.
-- /slap: slap a user, or get slapped if not a reply.
-- /shrug : get shrug XD.
-- /table : get flip/unflip :v.
-- /decide : Randomly answers yes/no/maybe
-- /toss : Tosses A coin
-- /bluetext : check urself :V
-- /roll : Roll a dice.
-- /rlg : Join ears,nose,mouth and create an emo ;-;
-- /judge: as a reply to someone, checks if they're lying or not!
-- /weebify: as a reply to a message, "weebifies" the message.
-- /shout `<word>`: shout the specified word in the chat.
-- /t: while replying to a message, will reply with a grammar corrected version
-- /tr (language code) as reply to a long message.
-- /reverse: Does a reverse image search of the media which it was replied to.
-- /react: Reacts with a random reaction.
-- /wiki `<query>`: Wiki your query.
-- /speak `<your text>`
-
+  - /abuse : To Abuse Someone.
+  - /runs: reply a random string from an array of replies.
+  - /slap: slap a user, or get slapped if not a reply.
+  - /shrug : get shrug XD.
+  - /table : get flip/unflip :v.
+  - /decide : Randomly answers yes/no/maybe
+  - /toss : Tosses A coin
+  - /bluetext : check urself :V
+  - /roll : Roll a dice.
+  - /rlg : Join ears,nose,mouth and create an emo ;-;
+  - /judge: as a reply to someone, checks if they're lying or not!
+  - /weebify: as a reply to a message, "weebifies" the message.
+  - /shout `<word>`: shout the specified word in the chat.
+  - /t: while replying to a message, will reply with a grammar corrected version
+  - /tr (language code) as reply to a long message.
+  - /reverse: Does a reverse image search of the media which it was replied to.
+  - /react: Reacts with a random reaction.
+  - /wiki `<query>`: Wiki your query.
+  - /speak `<your text>`
+  - /gps `<location>`: get gps location
+  - /cash: To convert a currency to another.
+  
+ *Emojis commands*
+  - /love - ❣️
+  - /hack 👨‍💻
+  - /bombs 💣
+  - /moonanimation 🌚
+  - /clockanimation 🕛
+  - /earthanimation 🌍
+  - /blockanimation 🟥
+  - /kill ⚰️
+  - /police 🚓
 """
 
 __mod_name__ = "Extras"
