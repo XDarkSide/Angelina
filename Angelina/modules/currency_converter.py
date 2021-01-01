@@ -38,16 +38,7 @@ def convert(bot: Bot, update: Update):
     else:
         update.effective_message.reply_text(__help__)
 
-__help__ = """
-A very helpful module to convert or check the current values of currencies.
 
-*User command:*
- - /cash: To convert a currency to another.
- 
- *Example:*
- - To convert 1 US Dollar(USD) to Indian Rupees(INR).
- -> `/cash 1 USD INR`
-"""
 
 CONVERTER_HANDLER = CommandHandler('cash', convert)
 
