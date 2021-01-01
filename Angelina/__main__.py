@@ -18,16 +18,14 @@ from Angelina.modules.helper_funcs.chat_status import is_user_admin
 from Angelina.modules.helper_funcs.misc import paginate_modules
 
 PM_START_TEXT = """
-Hey there! My name is Angelina - I'm here to help you manage your groups! Hit /help to find out more about how to use me to my full potential.
+Hey there! My name is Rose - I'm here to help you manage your groups! Hit /help to find out more about how to use me to my full potential.
 
-My future updates will be put into This Channel - @AngelinaSupport .
-
-I am made by Team BG.
+My future updates will be put into This Channel - @RoseSupportChannel .
 """
 
 HELP_STRINGS = """
 
-Hey! My name is Angelina. I am a group management bot, here to help you get around and keep the order in your groups!
+Hey! My name is Rose. I am a group management bot, here to help you get around and keep the order in your groups!
 I have lots of handy features, such as flood control, a warning system, a note keeping system, and even predetermined replies on certain keywords.
 
 Helpful commands:
@@ -135,7 +133,7 @@ def start(bot: Bot, update: Update, args: List[str]):
                                                                            bot.username))]]))
             
     else:
-        update.effective_message.reply_text("Heya:), I am Angelina!\nPM me if you have any questions on how to use me!")
+        update.effective_message.reply_text("Heya:), I am Rose!\nPM me if you have any questions on how to use me!")
         
 
 
