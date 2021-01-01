@@ -42,17 +42,6 @@ def gps(bot: Bot, update: Update, args: List[str]):
         update.message.reply_text("I can't find that")
 
 
-__help__ = """
-Here is the module to get a map for a particular location.
-
-*Command:*
- - /gps `<location>`: get gps location 
- 
-*Example:*
- - To get a map of "New York". 
- -> `/gps New York`
-"""
-
 __mod_name__ = "Maps"
 
 GPS_HANDLER = DisableAbleCommandHandler("gps", gps, pass_args=True)
