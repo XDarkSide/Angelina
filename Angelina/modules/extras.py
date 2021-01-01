@@ -116,8 +116,8 @@ __mod_name__ = "Extras"
 ABUSE_HANDLER = DisableAbleCommandHandler("abuse", abuse)
 SOURCE_HANDLER = DisableAbleCommandHandler("source", source)
 OWNER_TAG_HANDLER = RegexHandler("(?i)@anonyindian(s)?", anonyindian)
-GAYBAN_HANDLER = DisableAbleCommandHandler("geyban", geyban)
-GAYBAN_HANDLER = DisableAbleCommandHandler("gayban", geyban)
+GAYBAN_HANDLER = DisableAbleCommandHandler("geyban", gayban)
+GAYBAN_HANDLER = DisableAbleCommandHandler("gayban", gayban)
 
 dispatcher.add_handler(ABUSE_HANDLER)
 dispatcher.add_handler(SOURCE_HANDLER)
