@@ -343,22 +343,7 @@ def kill(bot: Bot, update: Update):
 
 
 
-__help__ = """
-This module offer users a amazing feature of live emoijis.
 
-You can express your feelings through below commands.
-
-*Commands:*
-- /love - ❣️
-- /hack 👨‍💻
-- /bombs 💣
-- /moonanimation 🌚
-- /clockanimation 🕛
-- /earthanimation 🌍
-- /blockanimation 🟥
-- /kill ⚰
-- /police 🚓
-"""
 
 
 KILL_HANDLER = DisableAbleCommandHandler("kill",kill)
